@@ -1,0 +1,44 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-6);
+  gap: var(--space-3);
+}
+
+.hero h2 {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.hero p {
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+}
+
+.shopButton {
+  color: white;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  padding: var(--space-3) var(--space-5);
+}
+
+.shopButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
+h3 {
+  font-size: var(--text-xl);
+  margin: var(--space-3) var(--space-1);
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-3);
+}

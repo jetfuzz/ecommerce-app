@@ -31,7 +31,6 @@ namespace backend.Data
                     Description = "A high-end smartphone.",
                     CategoryId = categories[0].Id,
                     Stock = 50,
-                    Rating = new Rating { Rate = 4.5f, Count = 100 },
                 },
                 new Product
                 {
@@ -40,7 +39,6 @@ namespace backend.Data
                     Description = "A powerful laptop.",
                     CategoryId = categories[0].Id,
                     Stock = 30,
-                    Rating = new Rating { Rate = 4.7f, Count = 50 },
                 },
                 new Product
                 {
@@ -49,7 +47,6 @@ namespace backend.Data
                     Description = "A comfortable t-shirt.",
                     CategoryId = categories[1].Id,
                     Stock = 100,
-                    Rating = new Rating { Rate = 4.2f, Count = 200 },
                 },
                 new Product
                 {
@@ -58,7 +55,6 @@ namespace backend.Data
                     Description = "An engaging novel.",
                     CategoryId = categories[2].Id,
                     Stock = 75,
-                    Rating = new Rating { Rate = 4.8f, Count = 150 },
                 },
                 new Product
                 {
@@ -67,7 +63,6 @@ namespace backend.Data
                     Description = "Noise-cancelling headphones.",
                     CategoryId = categories[0].Id,
                     Stock = 0,
-                    Rating = new Rating { Rate = 4.3f, Count = 80 },
                 },
             };
             context.Products.AddRange(products);

@@ -50,7 +50,6 @@ namespace backend.Controllers
                 Price = p.Price,
                 Image = p.Image,
                 Stock = p.Stock,
-                Rating = new RatingDto { Rate = p.Rating.Rate, Count = p.Rating.Count },
             });
             return Ok(productDtos);
         }
@@ -77,7 +76,6 @@ namespace backend.Controllers
                 Price = product.Price,
                 Image = product.Image,
                 Stock = product.Stock,
-                Rating = new RatingDto { Rate = product.Rating.Rate, Count = product.Rating.Count },
             };
 
             return Ok(productDto);

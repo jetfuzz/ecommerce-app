@@ -14,17 +14,6 @@ namespace backend.Data
 
             modelBuilder
                 .Entity<Product>()
-                .OwnsOne(
-                    p => p.Rating,
-                    r =>
-                    {
-                        r.Property(rating => rating.Rate).HasColumnName("Rate");
-                        r.Property(rating => rating.Count).HasColumnName("Count");
-                    }
-                );
-
-            modelBuilder
-                .Entity<Product>()
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId)

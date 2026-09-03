@@ -9,11 +9,5 @@
         public decimal Price { get; set; }
         public string? Image { get; set; } = null;
         public int Stock { get; set; }
-        public RatingDto Rating { get; set; } = new();
-    }
-    public class RatingDto
-    {
-        public double Rate { get; set; }
-        public int Count { get; set; }
     }
 }

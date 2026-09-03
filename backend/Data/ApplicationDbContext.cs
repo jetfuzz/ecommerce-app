@@ -64,6 +64,7 @@ namespace backend.Data
                 .HasForeignKey(oi => oi.OrderId);
 
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
 
             modelBuilder
                 .Entity<CartItem>()

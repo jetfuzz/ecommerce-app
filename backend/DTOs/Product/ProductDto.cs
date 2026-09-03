@@ -1,0 +1,19 @@
+﻿namespace backend.DTOs.Product
+{
+    public class ProductDto
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public string? CategoryName { get; set; }
+        public decimal Price { get; set; }
+        public string? Image { get; set; } = null;
+        public int Stock { get; set; }
+        public RatingDto Rating { get; set; } = new();
+    }
+    public class RatingDto
+    {
+        public double Rate { get; set; }
+        public int Count { get; set; }
+    }
+}

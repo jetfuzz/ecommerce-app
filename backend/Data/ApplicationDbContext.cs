@@ -23,8 +23,7 @@ namespace backend.Data
                 .Entity<CartItem>()
                 .HasOne(ci => ci.Product)
                 .WithMany()
-                .HasForeignKey(ci => ci.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(ci => ci.ProductId);
 
             modelBuilder
                 .Entity<CartItem>()
@@ -44,7 +43,7 @@ namespace backend.Data
                 .HasOne(oi => oi.Product)
                 .WithMany()
                 .HasForeignKey(oi => oi.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder
                 .Entity<OrderItem>()

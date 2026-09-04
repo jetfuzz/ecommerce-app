@@ -41,11 +41,11 @@ export default function CartPage() {
           {cart.map((item) => (
             <div key={item.product.id} className={styles.cartItem}>
               <div className={styles.imageWrapper}>
-                <img src={item.product.image} alt={item.product.title} />
+                <img src={item.product.image ?? undefined} alt={item.product.title} />
               </div>
               <div className={styles.itemInfo}>
                 <h4>{item.product.title}</h4>
-                <p className={styles.category}>{item.product.category}</p>
+                <p className={styles.category}>{item.product.categoryName}</p>
               </div>
               <div className={styles.cartActions}>
                 <div className={styles.quantity}>

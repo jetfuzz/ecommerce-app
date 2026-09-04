@@ -12,25 +12,25 @@ const mockProducts: Product[] = [
     id: 1,
     title: 'Backpack',
     price: 109.95,
-    category: "men's clothing",
+    categoryName: "men's clothing",
   }),
   createMockProduct({
     id: 2,
     title: 'T-Shirt',
     price: 22.3,
-    category: "men's clothing",
+    categoryName: "men's clothing",
   }),
   createMockProduct({
     id: 3,
     title: 'Gold Necklace',
     price: 695.0,
-    category: 'jewelery',
+    categoryName: 'jewelery',
   }),
   createMockProduct({
     id: 4,
     title: 'Snowboard Jacket',
     price: 56.99,
-    category: "women's clothing",
+    categoryName: "women's clothing",
   }),
 ];
 

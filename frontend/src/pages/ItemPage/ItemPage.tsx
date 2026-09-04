@@ -3,7 +3,7 @@ import type { Product } from '../../types';
 import { useState } from 'react';
 import styles from './ItemPage.module.css';
 import { formatPrice } from '../../utils/formatPrice';
-import { ArrowLeft, Star } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 interface ItemPageContext {
   products: Product[];
@@ -37,18 +37,18 @@ export default function ItemPage() {
       </button>
       <div className={styles.itemPage}>
         <div className={styles.imageWrapper}>
-          <img src={product.image} alt={product.title} />
+          <img src={product.image ?? undefined} alt={product.title} />
         </div>
         <div className={styles.itemInfo}>
           <h2>{product.title}</h2>
-          <p className={styles.category}>{product.category}</p>
+          <p className={styles.category}>{product.categoryName}</p>
           <p>{product.description}</p>
-          <div className={styles.rating}>
+          {/* <div className={styles.rating}>
             <Star fill="currentColor" size={14} />
             <p>
               {product.rating.rate} ({product.rating.count})
             </p>
-          </div>
+          </div> */}
           <p className={styles.price}>{formatPrice(product.price)}</p>
 
           <div className={styles.buttonGroup}>

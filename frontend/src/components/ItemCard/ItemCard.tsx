@@ -26,12 +26,12 @@ export default function ItemCard({ product }: ItemCardProps) {
       <Link to={`/shop/${product.id}`}>
         <h2 className={styles.productTitle}>{product.title}</h2>
       </Link>
-      <div className={styles.rating}>
+      {/* <div className={styles.rating}>
         <Star fill="currentColor" size={14} />
         <p>
           {product.rating.rate} ({product.rating.count})
         </p>
-      </div>
+      </div> */}
       <p className={styles.price}>{formatPrice(product.price)}</p>
       <button onClick={() => addToCart(product)}>Add to cart</button>
     </div>

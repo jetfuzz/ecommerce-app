@@ -6,9 +6,9 @@ export function createMockProduct(overrides: Partial<Product> = {}): Product {
     title: 'Product',
     price: 0,
     description: '',
-    category: 'misc',
+    categoryName: 'misc',
     image: '/image.png',
-    rating: { rate: 0, count: 0 },
+    stock: 0,
     ...overrides,
   };
 }

@@ -11,7 +11,7 @@ interface ShopContext {
 
 export default function ShopPage() {
   const { products, searchQuery } = useOutletContext<ShopContext>();
-  const categories = [...new Set(products.map((p) => p.category))];
+  const categories = [...new Set(products.map((p) => p.categoryName))];
   const [selected, setSelected] = useState<string[]>([]);
 
   function toggleCategory(category: string): void {
@@ -23,7 +23,7 @@ export default function ShopPage() {
   }
 
   const filteredProducts = products
-    .filter((p) => selected.length === 0 || selected.includes(p.category))
+    .filter((p) => selected.length === 0 || selected.includes(p.categoryName))
     .filter((p) => p.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (

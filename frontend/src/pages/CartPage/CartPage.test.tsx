@@ -11,7 +11,7 @@ const mockCart: CartItem[] = [
       id: 4,
       title: 'Snowboard Jacket',
       price: 56.99,
-      category: "women's clothing",
+      categoryName: "women's clothing",
     }),
     quantity: 2,
   },

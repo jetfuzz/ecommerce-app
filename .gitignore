@@ -504,3 +504,5 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sw?
+
+.env.*

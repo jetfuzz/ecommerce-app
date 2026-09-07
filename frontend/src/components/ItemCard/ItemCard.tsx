@@ -2,7 +2,6 @@ import { Link, useOutletContext } from 'react-router';
 import type { Product } from '../../types';
 import styles from './ItemCard.module.css';
 import { formatPrice } from '../../utils/formatPrice';
-import { Star } from 'lucide-react';
 
 interface ItemCardProps {
   product: Product;
@@ -18,7 +17,7 @@ export default function ItemCard({ product }: ItemCardProps) {
     <div className={styles.card}>
       <Link to={`/shop/${product.id}`}>
         <img
-          src={product.image}
+          src={product.image ?? undefined}
           alt={product.title}
           className={styles.productImg}
         />

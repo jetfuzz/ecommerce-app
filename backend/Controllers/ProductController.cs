@@ -85,7 +85,10 @@ namespace backend.Controllers
         // PUT: api/Product/5
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ProductDto>> UpdateProduct(int id, [FromBody] CreateProductDto createProductDto)
+        public async Task<ActionResult<ProductDto>> UpdateProduct(
+            int id,
+            [FromBody] CreateProductDto createProductDto
+        )
         {
             var product = await _context.Products.FindAsync(id);
             if (product == null)
@@ -125,7 +128,9 @@ namespace backend.Controllers
         // POST: api/Product
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ProductDto>> CreateProduct([FromBody] CreateProductDto createProductDto)
+        public async Task<ActionResult<ProductDto>> CreateProduct(
+            [FromBody] CreateProductDto createProductDto
+        )
         {
             var category = await _context.Categories.FindAsync(createProductDto.CategoryId);
             if (category == null)

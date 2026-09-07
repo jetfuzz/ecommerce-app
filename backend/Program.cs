@@ -71,6 +71,7 @@ builder
 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 var app = builder.Build();
 

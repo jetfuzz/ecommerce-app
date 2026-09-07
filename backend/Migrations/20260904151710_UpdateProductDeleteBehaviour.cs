@@ -12,11 +12,13 @@ namespace backend.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_CartItems_Products_ProductId",
-                table: "CartItems");
+                table: "CartItems"
+            );
 
             migrationBuilder.DropForeignKey(
                 name: "FK_OrderItems_Products_ProductId",
-                table: "OrderItems");
+                table: "OrderItems"
+            );
 
             migrationBuilder.AlterColumn<int>(
                 name: "ProductId",
@@ -24,14 +26,16 @@ namespace backend.Migrations
                 type: "integer",
                 nullable: true,
                 oldClrType: typeof(int),
-                oldType: "integer");
+                oldType: "integer"
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "ProductTitle",
                 table: "OrderItems",
                 type: "text",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CartItems_Products_ProductId",
@@ -39,7 +43,8 @@ namespace backend.Migrations
                 column: "ProductId",
                 principalTable: "Products",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OrderItems_Products_ProductId",
@@ -47,7 +52,8 @@ namespace backend.Migrations
                 column: "ProductId",
                 principalTable: "Products",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
+                onDelete: ReferentialAction.SetNull
+            );
         }
 
         /// <inheritdoc />
@@ -55,15 +61,15 @@ namespace backend.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_CartItems_Products_ProductId",
-                table: "CartItems");
+                table: "CartItems"
+            );
 
             migrationBuilder.DropForeignKey(
                 name: "FK_OrderItems_Products_ProductId",
-                table: "OrderItems");
+                table: "OrderItems"
+            );
 
-            migrationBuilder.DropColumn(
-                name: "ProductTitle",
-                table: "OrderItems");
+            migrationBuilder.DropColumn(name: "ProductTitle", table: "OrderItems");
 
             migrationBuilder.AlterColumn<int>(
                 name: "ProductId",
@@ -73,7 +79,8 @@ namespace backend.Migrations
                 defaultValue: 0,
                 oldClrType: typeof(int),
                 oldType: "integer",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CartItems_Products_ProductId",
@@ -81,7 +88,8 @@ namespace backend.Migrations
                 column: "ProductId",
                 principalTable: "Products",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Restrict
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OrderItems_Products_ProductId",
@@ -89,7 +97,8 @@ namespace backend.Migrations
                 column: "ProductId",
                 principalTable: "Products",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Restrict
+            );
         }
     }
 }

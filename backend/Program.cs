@@ -1,11 +1,15 @@
 using System.Text;
 using backend.Data;
+using backend.Middleware;
 using backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddControllers();
 
@@ -74,6 +78,7 @@ builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<ICartService, CartService>();
 
 var app = builder.Build();
+app.UseExceptionHandler();
 
 using (var scope = app.Services.CreateScope())
 {

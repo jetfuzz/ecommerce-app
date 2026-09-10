@@ -4,6 +4,9 @@ import ErrorPage from './pages/ErrorPage/ErrorPage';
 import HomePage from './pages/HomePage/HomePage';
 import ShopPage from './pages/ShopPage/ShopPage';
 import ItemPage from './pages/ItemPage/ItemPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
+import AdminPage from './pages/AdminPage/AdminPage';
 
 const routes = [
   {
@@ -11,21 +14,17 @@ const routes = [
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      { index: true, element: <HomePage /> },
+      { path: '/shop', element: <ShopPage /> },
+      { path: '/shop/:id', element: <ItemPage /> },
+      { path: '/login', element: <LoginPage /> },
       {
-        index: true,
-        element: <HomePage />,
+        element: <ProtectedRoute />,
+        children: [{ path: '/cart', element: <CartPage /> }],
       },
       {
-        path: '/shop',
-        element: <ShopPage />,
-      },
-      {
-        path: '/shop/:id',
-        element: <ItemPage />,
-      },
-      {
-        path: '/cart',
-        element: <CartPage />,
+        element: <ProtectedRoute allowedRoles={['Admin']} />,
+        children: [{ path: '/admin', element: <AdminPage /> }],
       },
     ],
   },

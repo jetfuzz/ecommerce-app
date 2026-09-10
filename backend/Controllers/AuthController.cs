@@ -74,7 +74,17 @@ namespace backend.Controllers
             }
 
             var token = _tokenService.GenerateToken(user);
-            return Ok(new { token });
+            var dto = new LoginResponseDto
+            {
+                Token = token,
+                User = new UserDto
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Role = user.Role.ToString()
+                }
+            };
+            return Ok(dto);
         }
     }
 }

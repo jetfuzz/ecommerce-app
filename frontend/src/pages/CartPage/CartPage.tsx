@@ -1,16 +1,10 @@
-import { useOutletContext } from 'react-router';
-import type { CartItem } from '../../types';
+import type { Cart } from '../../types';
 import { formatPrice } from '../../utils/formatPrice';
 import styles from './CartPage.module.css';
 import { Trash2 } from 'lucide-react';
+import { useCartContext } from '../../context/CartContext';
 
 const TAX_RATE = 0.13;
-
-interface CartContext {
-  cart: CartItem[];
-  updateQuantity: (productId: number, quantity: number) => void;
-  removeFromCart: (productId: number) => void;
-}
 
 interface OrderSummary {
   subtotal: number;
@@ -18,65 +12,63 @@ interface OrderSummary {
   tax: number;
 }
 
-function getTotal(cartItems: CartItem[]): OrderSummary {
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.quantity * item.product.price,
-    0,
-  );
+function getTotal(cart: Cart): OrderSummary {
+  const subtotal = cart.subtotal;
   const tax = subtotal * TAX_RATE;
   return { subtotal, tax, total: subtotal + tax };
 }
 
 export default function CartPage() {
-  const { cart, updateQuantity, removeFromCart } =
-    useOutletContext<CartContext>();
+  const { cartState, updateQuantity, removeFromCart } = useCartContext();
+
+  if (cartState.status === 'idle') return null;
+  if (cartState.status === 'loading') return <p>Loading...</p>;
+  if (cartState.status === 'error') return <p>{cartState.message}</p>;
+
+  const cart = cartState.data;
   const { subtotal, tax, total } = getTotal(cart);
 
-  if (cart.length === 0) return <p>Your shopping cart is empty</p>;
+  if (cart.items.length === 0) return <p>Your shopping cart is empty</p>;
   return (
     <div>
       <h2 className={styles.cartTitle}>Shopping Bag</h2>
       <div className={styles.cartPage}>
         <div className={styles.cart}>
-          {cart.map((item) => (
-            <div key={item.product.id} className={styles.cartItem}>
+          {cart.items.map((item) => (
+            <div key={item.productId} className={styles.cartItem}>
               <div className={styles.imageWrapper}>
                 <img
-                  src={item.product.image ?? undefined}
-                  alt={item.product.title}
+                  src={item.productImage ?? undefined}
+                  alt={item.productTitle}
                 />
               </div>
               <div className={styles.itemInfo}>
-                <h4>{item.product.title}</h4>
-                <p className={styles.category}>{item.product.categoryName}</p>
+                <h4>{item.productTitle}</h4>
+                <p className={styles.category}>{item.productCategoryName}</p>
               </div>
               <div className={styles.cartActions}>
                 <div className={styles.quantity}>
                   <button
-                    onClick={() =>
-                      updateQuantity(item.product.id, item.quantity - 1)
-                    }
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     disabled={item.quantity <= 1}
                   >
                     -
                   </button>
                   <span>{item.quantity}</span>
                   <button
-                    onClick={() =>
-                      updateQuantity(item.product.id, item.quantity + 1)
-                    }
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
                   >
                     +
                   </button>
                 </div>
                 <button
                   className={styles.deleteButton}
-                  onClick={() => removeFromCart(item.product.id)}
+                  onClick={() => removeFromCart(item.id)}
                 >
                   <Trash2 size={18} />
                 </button>
                 <p className={styles.price}>
-                  {formatPrice(item.product.price * item.quantity)}
+                  {formatPrice(item.productPrice * item.quantity)}
                 </p>
               </div>
             </div>

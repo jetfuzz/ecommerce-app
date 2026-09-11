@@ -1,18 +1,16 @@
-import { Link, useOutletContext } from 'react-router';
+import { Link } from 'react-router';
 import type { Product } from '../../types';
 import styles from './ItemCard.module.css';
 import { formatPrice } from '../../utils/formatPrice';
+import { useCartContext } from '../../context/CartContext';
 
 interface ItemCardProps {
   product: Product;
 }
 
-interface ItemCardContext {
-  addToCart: (product: Product) => void;
-}
-
 export default function ItemCard({ product }: ItemCardProps) {
-  const { addToCart } = useOutletContext<ItemCardContext>();
+  const { addToCart } = useCartContext();
+
   return (
     <div className={styles.card}>
       <Link to={`/shop/${product.id}`}>
@@ -32,7 +30,7 @@ export default function ItemCard({ product }: ItemCardProps) {
         </p>
       </div> */}
       <p className={styles.price}>{formatPrice(product.price)}</p>
-      <button onClick={() => addToCart(product)}>Add to cart</button>
+      <button onClick={() => addToCart(product.id, 1)}>Add to cart</button>
     </div>
   );
 }

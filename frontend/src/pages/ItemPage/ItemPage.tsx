@@ -4,15 +4,16 @@ import { useState } from 'react';
 import styles from './ItemPage.module.css';
 import { formatPrice } from '../../utils/formatPrice';
 import { ArrowLeft } from 'lucide-react';
+import { useCartContext } from '../../context/CartContext';
 
 interface ItemPageContext {
   products: Product[];
-  addToCart: (product: Product, quantity?: number) => void;
 }
 
 export default function ItemPage() {
   const { id } = useParams();
-  const { products, addToCart } = useOutletContext<ItemPageContext>();
+  const { products } = useOutletContext<ItemPageContext>();
+  const { addToCart } = useCartContext();
   const [quantity, setQuantity] = useState<number>(1);
   const decrement = () => setQuantity((prev) => Math.max(1, prev - 1));
   const increment = () => setQuantity((prev) => prev + 1);
@@ -68,7 +69,7 @@ export default function ItemPage() {
             </div>
             <button
               className={styles.addToCart}
-              onClick={() => addToCart(product, quantity)}
+              onClick={() => addToCart(product.id, quantity)}
             >
               Add to cart
             </button>

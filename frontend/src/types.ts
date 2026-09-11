@@ -9,8 +9,19 @@ export interface Product {
 }
 
 export interface CartItem {
-  product: Product;
+  id: number;
+  productId: number;
+  productTitle: string;
+  productImage: string | null;
+  productCategoryName: string | null;
+  productPrice: number;
   quantity: number;
+}
+
+export interface Cart {
+  items: CartItem[];
+  subtotal: number;
+  totalItemCount: number;
 }
 
 export type UserRole = 'Admin' | 'User';
@@ -33,3 +44,9 @@ export interface AuthContextType extends AuthState {
   login: (token: string, user: User) => void;
   logout: () => void;
 }
+
+export type CartState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'error'; message: string }
+  | { status: 'success'; data: Cart };

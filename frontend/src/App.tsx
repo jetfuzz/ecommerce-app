@@ -2,13 +2,15 @@ import { Outlet } from 'react-router';
 import Header from './components/Header/Header';
 import { useState } from 'react';
 import { useProducts } from './hooks/useProducts';
-import { useCart } from './hooks/useCart';
+import { useCartContext } from './context/CartContext';
 
 function App() {
   const productState = useProducts();
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const { cart, cartItemCount, addToCart, updateQuantity, removeFromCart } =
-    useCart();
+  const { cartState } = useCartContext();
+
+  const cartItemCount =
+    cartState.status === 'success' ? cartState.data.totalItemCount : 0;
 
   return (
     <>
@@ -24,10 +26,6 @@ function App() {
           context={{
             products: productState.data,
             searchQuery,
-            cart,
-            addToCart,
-            removeFromCart,
-            updateQuantity,
           }}
         />
       )}

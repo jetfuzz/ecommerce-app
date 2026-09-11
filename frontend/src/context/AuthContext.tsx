@@ -10,40 +10,42 @@ import { type AuthState, type AuthContextType, type User } from '../types';
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [state, setState] = useState<AuthState>({
-    user: null,
-    token: null,
-    isAuthenticated: false,
-    isLoading: true,
-  });
-
-  // syncs context state when axiosInstance clears localStorage on 401
-  useEffect(() => {
-    const handler = () => setState({ user: null, token: null, isAuthenticated: false, isLoading: false});
-    window.addEventListener('auth:logout', handler);
-    return () => window.removeEventListener('auth:logout', handler);
-  }, []);
-
-  useEffect(() => {
+  const [state, setState] = useState<AuthState>(() => {
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
-
     if (storedToken && storedUser) {
       try {
-        setState({
+        return {
           token: storedToken,
           user: JSON.parse(storedUser) as User,
           isAuthenticated: true,
           isLoading: false,
-        });
+        };
       } catch (error) {
+        console.error(error);
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        setState((prev) => ({ ...prev, isLoading: false }));
       }
-    } else {
-      setState((prev) => ({ ...prev, isLoading: false }));
     }
+    return {
+      user: null,
+      token: null,
+      isAuthenticated: false,
+      isLoading: false,
+    };
+  });
+
+  // syncs context state when axiosInstance clears localStorage on 401
+  useEffect(() => {
+    const handler = () =>
+      setState({
+        user: null,
+        token: null,
+        isAuthenticated: false,
+        isLoading: false,
+      });
+    window.addEventListener('auth:logout', handler);
+    return () => window.removeEventListener('auth:logout', handler);
   }, []);
 
   const login = (token: string, user: User) => {

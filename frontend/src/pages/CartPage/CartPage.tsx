@@ -3,6 +3,8 @@ import { formatPrice } from '../../utils/formatPrice';
 import styles from './CartPage.module.css';
 import { Trash2 } from 'lucide-react';
 import { useCartContext } from '../../context/CartContext';
+import { createCheckoutSession } from '../../api/checkout';
+import { useState } from 'react';
 
 const TAX_RATE = 0.13;
 
@@ -20,6 +22,23 @@ function getTotal(cart: Cart): OrderSummary {
 
 export default function CartPage() {
   const { cartState, updateQuantity, removeFromCart } = useCartContext();
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  async function handleCheckout() {
+    setIsCheckingOut(true);
+    setCheckoutError(null);
+    try {
+      const session = await createCheckoutSession();
+      window.location.href = session.url;
+    } catch (err) {
+      console.error(err);
+      setCheckoutError(
+        'Something went wrong starting checkout. Please try again.',
+      );
+      setIsCheckingOut(false);
+    }
+  }
 
   if (cartState.status === 'idle') return null;
   if (cartState.status === 'loading') return <p>Loading...</p>;
@@ -29,6 +48,7 @@ export default function CartPage() {
   const { subtotal, tax, total } = getTotal(cart);
 
   if (cart.items.length === 0) return <p>Your shopping cart is empty</p>;
+
   return (
     <div>
       <h2 className={styles.cartTitle}>Shopping Bag</h2>
@@ -81,15 +101,14 @@ export default function CartPage() {
           <p>Tax: {formatPrice(tax)}</p>
           <hr />
           <p className={styles.orderTotal}>Total: {formatPrice(total)}</p>
+          {/* missing styles.error */}
+          {checkoutError && <p className={styles.error}>{checkoutError}</p>}
           <button
             className={styles.checkoutBtn}
-            onClick={() =>
-              window.alert(
-                "Congrats! If this were a real shop, you'd have just placed an order 😁",
-              )
-            }
+            onClick={handleCheckout}
+            disabled={isCheckingOut}
           >
-            Checkout
+            {isCheckingOut ? 'Redirecting...' : 'Checkout'}
           </button>
         </div>
       </div>

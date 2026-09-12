@@ -7,6 +7,7 @@ import ItemPage from './pages/ItemPage/ItemPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import AdminPage from './pages/AdminPage/AdminPage';
+import SuccessPage from './pages/SuccessPage/SuccessPage';
 
 const routes = [
   {
@@ -20,7 +21,10 @@ const routes = [
       { path: '/login', element: <LoginPage /> },
       {
         element: <ProtectedRoute />,
-        children: [{ path: '/cart', element: <CartPage /> }],
+        children: [
+          { path: '/cart', element: <CartPage /> },
+          { path: '/success', element: <SuccessPage /> },
+        ],
       },
       {
         element: <ProtectedRoute allowedRoles={['Admin']} />,

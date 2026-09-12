@@ -81,8 +81,8 @@ namespace backend.Controllers
                 {
                     Id = user.Id,
                     Username = user.Username,
-                    Role = user.Role.ToString()
-                }
+                    Role = user.Role.ToString(),
+                },
             };
             return Ok(dto);
         }

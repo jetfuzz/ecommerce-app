@@ -5,6 +5,7 @@ using backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,8 +74,10 @@ builder
         }
     );
 
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<backend.Services.TokenService>();
 builder.Services.AddScoped<ICartService, CartService>();
 
 var app = builder.Build();
@@ -83,7 +86,8 @@ app.UseExceptionHandler();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    await DbInitializer.Initialize(db);
+    var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+    await DbInitializer.Initialize(db, config);
 }
 
 if (app.Environment.IsDevelopment())

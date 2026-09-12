@@ -9,6 +9,7 @@
         public decimal TotalAmount { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
+        public string? StripeSessionId { get; set; }
     }
 
     public enum OrderStatus

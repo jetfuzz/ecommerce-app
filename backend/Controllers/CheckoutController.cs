@@ -1,10 +1,10 @@
-﻿using System.Security.Claims;
-using backend.Data;
+﻿using backend.Data;
 using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {

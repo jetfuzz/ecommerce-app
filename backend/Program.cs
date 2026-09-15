@@ -1,4 +1,3 @@
-using System.Text;
 using backend.Data;
 using backend.Middleware;
 using backend.Services;
@@ -6,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Stripe;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 

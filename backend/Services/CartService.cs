@@ -25,15 +25,15 @@ namespace backend.Services
             return new CartDto
             {
                 Items = cart.Select(ci => new CartItemDto
-                    {
-                        Id = ci.Id,
-                        ProductId = ci.ProductId,
-                        ProductTitle = ci.Product.Title,
-                        ProductImage = ci.Product.Image,
-                        ProductCategoryName = ci.Product.Category?.Name,
-                        ProductPrice = ci.Product.Price,
-                        Quantity = ci.Quantity,
-                    })
+                {
+                    Id = ci.Id,
+                    ProductId = ci.ProductId,
+                    ProductTitle = ci.Product.Title,
+                    ProductImage = ci.Product.Image,
+                    ProductCategoryName = ci.Product.Category?.Name,
+                    ProductPrice = ci.Product.Price,
+                    Quantity = ci.Quantity,
+                })
                     .ToList(),
                 Subtotal = cart.Sum(ci => ci.Quantity * ci.Product.Price),
                 TotalItemCount = cart.Sum(ci => ci.Quantity),

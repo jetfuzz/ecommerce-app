@@ -1,47 +1,61 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createMockProduct } from '../../tests/mocks';
 import { render, screen } from '@testing-library/react';
 import ItemPage from './ItemPage';
 import type { Product } from '../../types';
-import { useOutletContext, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import userEvent from '@testing-library/user-event';
+import { useCartContext } from '../../context/CartContext';
+import { useProduct } from '../../hooks/useProduct';
 
-const mockProducts: Product[] = [createMockProduct({ id: 1 })];
+const mockProduct: Product = createMockProduct({ id: 1 });
+
+vi.mock('../../hooks/useProduct', () => ({
+  useProduct: vi.fn(),
+}));
 
 vi.mock('react-router', () => ({
-  useOutletContext: vi.fn(),
   useParams: vi.fn(),
   useNavigate: vi.fn(),
 }));
 
+vi.mock('../../context/CartContext', () => ({
+  useCartContext: vi.fn(),
+}));
+
+beforeEach(() => {
+  vi.mocked(useCartContext).mockReturnValue({
+    addToCart: vi.fn(),
+    cartState: { status: 'idle' },
+    updateQuantity: vi.fn(),
+    removeFromCart: vi.fn(),
+  });
+});
+
 describe('ItemPage', () => {
   it('should display "Product not found." when id is missing', () => {
     vi.mocked(useParams).mockReturnValue({});
-    vi.mocked(useOutletContext).mockReturnValue({
-      products: mockProducts,
-      addToCart: vi.fn(),
-    });
     render(<ItemPage />);
 
     expect(screen.getByText('Product not found.')).toBeInTheDocument();
   });
 
-  it('should display "Product not found." when id doesnt match product', () => {
+  it('should display an error message when the product fetch fails', () => {
     vi.mocked(useParams).mockReturnValue({ id: '99999' });
-    vi.mocked(useOutletContext).mockReturnValue({
-      products: mockProducts,
-      addToCart: vi.fn(),
+    vi.mocked(useProduct).mockReturnValue({
+      status: 'error',
+      message: 'Product not found',
     });
     render(<ItemPage />);
 
-    expect(screen.getByText('Product not found.')).toBeInTheDocument();
+    expect(screen.getByText('Product not found')).toBeInTheDocument();
   });
 
   it('should not allow quantity to decrement below 1', async () => {
     vi.mocked(useParams).mockReturnValue({ id: '1' });
-    vi.mocked(useOutletContext).mockReturnValue({
-      products: mockProducts,
-      addToCart: vi.fn(),
+    vi.mocked(useProduct).mockReturnValue({
+      status: 'success',
+      data: mockProduct,
     });
     const user = userEvent.setup();
     render(<ItemPage />);
@@ -51,14 +65,22 @@ describe('ItemPage', () => {
     await user.click(screen.getByRole('button', { name: '-' }));
 
     expect(screen.getByRole('spinbutton')).toHaveValue(1);
+    expect(screen.getByRole('button', { name: '-' })).toBeDisabled();
   });
 
   it('should call addToCart with the correct quantity', async () => {
     const addToCart = vi.fn();
-    vi.mocked(useParams).mockReturnValue({ id: '1' });
-    vi.mocked(useOutletContext).mockReturnValue({
-      products: mockProducts,
+    vi.mocked(useCartContext).mockReturnValue({
       addToCart,
+      cartState: { status: 'idle' },
+      updateQuantity: vi.fn(),
+      removeFromCart: vi.fn(),
+    });
+
+    vi.mocked(useParams).mockReturnValue({ id: '1' });
+    vi.mocked(useProduct).mockReturnValue({
+      status: 'success',
+      data: mockProduct,
     });
     const user = userEvent.setup();
     render(<ItemPage />);
@@ -68,6 +90,15 @@ describe('ItemPage', () => {
     await user.click(screen.getByRole('button', { name: '-' }));
     await user.click(screen.getByRole('button', { name: 'Add to cart' }));
 
-    expect(addToCart).toHaveBeenCalledWith(mockProducts[0], 2);
+    expect(addToCart).toHaveBeenCalledWith(mockProduct.id, 2);
+  });
+
+  it('should display loading state', () => {
+    vi.mocked(useParams).mockReturnValue({ id: '1' });
+    vi.mocked(useProduct).mockReturnValue({ status: 'loading' });
+    
+    render(<ItemPage />);
+
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 });

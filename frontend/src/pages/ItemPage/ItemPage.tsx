@@ -1,30 +1,27 @@
-import { useNavigate, useOutletContext, useParams } from 'react-router';
-import type { Product } from '../../types';
+import { useNavigate, useParams } from 'react-router';
 import { useState } from 'react';
 import styles from './ItemPage.module.css';
 import { formatPrice } from '../../utils/formatPrice';
 import { ArrowLeft } from 'lucide-react';
 import { useCartContext } from '../../context/CartContext';
-
-interface ItemPageContext {
-  products: Product[];
-}
+import { useProduct } from '../../hooks/useProduct';
 
 export default function ItemPage() {
   const { id } = useParams();
-  const { products } = useOutletContext<ItemPageContext>();
+  const productState = useProduct(id ? Number(id) : undefined);
   const { addToCart } = useCartContext();
   const [quantity, setQuantity] = useState<number>(1);
-  const decrement = () => setQuantity((prev) => Math.max(1, prev - 1));
-  const increment = () => setQuantity((prev) => prev + 1);
   const navigate = useNavigate();
 
-  const goBack = () => {
-    navigate(-1);
-  };
+  const decrement = () => setQuantity((prev) => Math.max(1, prev - 1));
+  const increment = () => setQuantity((prev) => prev + 1);
+  const goBack = () => navigate(-1);
 
   if (!id) return <p>Product not found.</p>;
-  const product = products.find((p) => p.id === Number(id));
+  if (productState.status === 'loading') return <p>Loading...</p>;
+  if (productState.status === 'error') return <p>{productState.message}</p>;
+
+  const product = productState.data;
   if (!product) return <p>Product not found.</p>;
 
   return (
@@ -44,12 +41,6 @@ export default function ItemPage() {
           <h2>{product.title}</h2>
           <p className={styles.category}>{product.categoryName}</p>
           <p>{product.description}</p>
-          {/* <div className={styles.rating}>
-            <Star fill="currentColor" size={14} />
-            <p>
-              {product.rating.rate} ({product.rating.count})
-            </p>
-          </div> */}
           <p className={styles.price}>{formatPrice(product.price)}</p>
 
           <div className={styles.buttonGroup}>

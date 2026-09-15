@@ -2,7 +2,7 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
-import { router } from '../main';
+import { router } from '../router';
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -26,7 +26,7 @@ api.interceptors.response.use(
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.dispatchEvent(new Event('auth:logout'));
-      router.navigate('/login');
+      router.navigate('/login', { replace: true });
     }
     return Promise.reject(error);
   },

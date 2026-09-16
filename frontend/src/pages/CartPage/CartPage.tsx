@@ -1,24 +1,9 @@
-import type { Cart } from '../../types';
 import { formatPrice } from '../../utils/formatPrice';
 import styles from './CartPage.module.css';
 import { Trash2 } from 'lucide-react';
 import { useCartContext } from '../../context/CartContext';
 import { createCheckoutSession } from '../../api/checkout';
 import { useState } from 'react';
-
-const TAX_RATE = 0.13;
-
-interface OrderSummary {
-  subtotal: number;
-  total: number;
-  tax: number;
-}
-
-function getTotal(cart: Cart): OrderSummary {
-  const subtotal = cart.subtotal;
-  const tax = subtotal * TAX_RATE;
-  return { subtotal, tax, total: subtotal + tax };
-}
 
 export default function CartPage() {
   const { cartState, updateQuantity, removeFromCart } = useCartContext();
@@ -45,7 +30,6 @@ export default function CartPage() {
   if (cartState.status === 'error') return <p>{cartState.message}</p>;
 
   const cart = cartState.data;
-  const { subtotal, tax, total } = getTotal(cart);
 
   if (cart.items.length === 0) return <p>Your shopping cart is empty</p>;
 
@@ -84,6 +68,7 @@ export default function CartPage() {
                 <button
                   className={styles.deleteButton}
                   onClick={() => removeFromCart(item.id)}
+                  aria-label="Remove item from cart"
                 >
                   <Trash2 size={18} />
                 </button>
@@ -97,10 +82,9 @@ export default function CartPage() {
 
         <div className={styles.orderSummary}>
           <h3>Order Summary</h3>
-          <p>Subtotal: {formatPrice(subtotal)}</p>
-          <p>Tax: {formatPrice(tax)}</p>
-          <hr />
-          <p className={styles.orderTotal}>Total: {formatPrice(total)}</p>
+          <p className={styles.orderTotal}>
+            Subtotal: {formatPrice(cart.subtotal)}
+          </p>
           {/* missing styles.error */}
           {checkoutError && <p className={styles.error}>{checkoutError}</p>}
           <button

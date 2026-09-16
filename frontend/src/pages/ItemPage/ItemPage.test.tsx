@@ -96,7 +96,7 @@ describe('ItemPage', () => {
   it('should display loading state', () => {
     vi.mocked(useParams).mockReturnValue({ id: '1' });
     vi.mocked(useProduct).mockReturnValue({ status: 'loading' });
-    
+
     render(<ItemPage />);
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();

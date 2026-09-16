@@ -32,6 +32,7 @@ describe('effect hook', () => {
     vi.mocked(useAuth).mockReturnValue({
       isAuthenticated: true,
     } as AuthContextType);
+    vi.mocked(fetchCart).mockReturnValue(new Promise(() => {}));
 
     const { result } = renderHook(() => useCart());
 

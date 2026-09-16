@@ -1,63 +1,114 @@
-import { describe, expect, it, vi } from 'vitest';
-import { createMockProduct } from '../../tests/mocks';
-import type { CartItem } from '../../types';
-import { useOutletContext } from 'react-router';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import CartPage from './CartPage';
+import { useCartContext } from '../../context/CartContext';
+import type { Cart } from '../../types';
+import { createMockCart, createMockCartItem } from '../../tests/mocks';
+import { createCheckoutSession } from '../../api/checkout';
 
-const mockCart: CartItem[] = [
-  {
-    product: createMockProduct({
-      id: 4,
-      title: 'Snowboard Jacket',
-      price: 56.99,
-      categoryName: "women's clothing",
-    }),
-    quantity: 2,
-  },
-];
+const mockCart: Cart = createMockCart({
+  items: [createMockCartItem({ id: 1, quantity: 1 })],
+});
 
-vi.mock('react-router', () => ({
-  useOutletContext: vi.fn(),
+vi.mock('../../context/CartContext', () => ({
+  useCartContext: vi.fn(),
 }));
 
+vi.mock('../../api/checkout', () => ({
+  createCheckoutSession: vi.fn(),
+}));
+
+beforeEach(() => {
+  vi.mocked(useCartContext).mockReturnValue({
+    cartState: { status: 'success', data: mockCart },
+    updateQuantity: vi.fn(),
+    removeFromCart: vi.fn(),
+    addToCart: vi.fn(),
+  });
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
 describe('CartPage', () => {
-  it('should render all cart items with name and quantity', () => {
-    vi.mocked(useOutletContext).mockReturnValue({
-      cart: mockCart,
-      updateQuantity: vi.fn(),
-      removeFromCart: vi.fn(),
-    });
+  it('disables decrement button when item quantity is 1', () => {
     render(<CartPage />);
 
-    expect(screen.getByText('Snowboard Jacket')).toBeInTheDocument();
-    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '-' })).toBeDisabled();
   });
 
-  it('should calculate subtotal, total, and tax correctly', () => {
-    vi.mocked(useOutletContext).mockReturnValue({
-      cart: mockCart,
-      updateQuantity: vi.fn(),
+  it('calls updateQuantity with correct values', async () => {
+    const updateQuantity = vi.fn();
+    vi.mocked(useCartContext).mockReturnValue({
+      cartState: {
+        status: 'success',
+        data: createMockCart({
+          items: [createMockCartItem({ id: 1, quantity: 2 })],
+        }),
+      },
+      updateQuantity,
       removeFromCart: vi.fn(),
+      addToCart: vi.fn(),
     });
+    const user = userEvent.setup();
     render(<CartPage />);
 
-    // subtotal = 56.99 * 2 = 113.98
-    // tax = 113.98 * 0.13 = 14.8174 -> "$14.82"
-    // total = 113.98 + 14.8174 = 128.7974 -> "$128.80"
-    expect(screen.getAllByText(/\$113\.98/)).toHaveLength(2);
-    expect(screen.getByText(/\$14\.82/)).toBeInTheDocument();
-    expect(screen.getByText(/\$128\.80/)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '+' }));
+    expect(updateQuantity).toHaveBeenCalledWith(1, 3);
+    await user.click(screen.getByRole('button', { name: '-' }));
+    expect(updateQuantity).toHaveBeenCalledWith(1, 1);
   });
 
-  it('should show empty cart message when cart is empty', () => {
-    vi.mocked(useOutletContext).mockReturnValue({
-      cart: [],
+  it('calls removeFromCart with the correct item id', async () => {
+    const removeFromCart = vi.fn();
+    vi.mocked(useCartContext).mockReturnValue({
+      cartState: { status: 'success', data: mockCart },
       updateQuantity: vi.fn(),
-      removeFromCart: vi.fn(),
+      removeFromCart,
+      addToCart: vi.fn(),
     });
+    const user = userEvent.setup();
     render(<CartPage />);
 
-    expect(screen.getByText(/cart is empty/)).toBeInTheDocument();
+    await user.click(
+      screen.getByRole('button', { name: 'Remove item from cart' }),
+    );
+    expect(removeFromCart).toHaveBeenCalledWith(1);
+  });
+
+  it('redirects to the checkout session URL on success', async () => {
+    vi.mocked(createCheckoutSession).mockResolvedValue({
+      url: 'https://checkout.example.com/session',
+    });
+    vi.stubGlobal('location', { href: '' });
+
+    const user = userEvent.setup();
+    render(<CartPage />);
+
+    await user.click(screen.getByRole('button', { name: 'Checkout' }));
+
+    await waitFor(() => {
+      expect(window.location.href).toBe('https://checkout.example.com/session');
+    });
+  });
+
+  it('shows an error and re-enables checkout button when checkout fails', async () => {
+    vi.mocked(createCheckoutSession).mockRejectedValue(new Error('failed'));
+
+    const user = userEvent.setup();
+    render(<CartPage />);
+
+    await user.click(screen.getByRole('button', { name: 'Checkout' }));
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'Something went wrong starting checkout. Please try again.',
+        ),
+      ).toBeInTheDocument();
+    });
+    expect(screen.getByRole('button', { name: 'Checkout' })).not.toBeDisabled();
   });
 });

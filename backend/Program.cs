@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Stripe;
+using Stripe.Checkout;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,7 +42,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
@@ -79,6 +79,7 @@ StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<backend.Services.TokenService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<SessionService>();
 
 var app = builder.Build();
 app.UseExceptionHandler();

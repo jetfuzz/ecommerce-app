@@ -15,16 +15,19 @@ namespace backend.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ICartService _cartService;
         private readonly IConfiguration _configuration;
+        private readonly SessionService _sessionService;
 
         public CheckoutController(
             ApplicationDbContext context,
             ICartService cartService,
-            IConfiguration configuration
+            IConfiguration configuration,
+            SessionService sessionService
         )
         {
             _context = context;
             _cartService = cartService;
             _configuration = configuration;
+            _sessionService = sessionService;
         }
 
         [Authorize]
@@ -94,8 +97,7 @@ namespace backend.Controllers
                 CancelUrl = $"{_configuration["Frontend:BaseUrl"]}/cart",
             };
 
-            var service = new SessionService();
-            Session session = await service.CreateAsync(options);
+            Session session = await _sessionService.CreateAsync(options);
 
             order.StripeSessionId = session.Id;
             await _context.SaveChangesAsync();

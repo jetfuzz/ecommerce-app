@@ -1,3 +1,5 @@
+using System.Text;
+using System.Text.Json.Serialization;
 using backend.Data;
 using backend.Middleware;
 using backend.Services;
@@ -6,14 +8,17 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Stripe;
 using Stripe.Checkout;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
-builder.Services.AddControllers();
+builder
+    .Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+    );
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

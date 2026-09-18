@@ -1,8 +1,8 @@
-﻿using backend.DTOs.Cart;
+﻿using System.Security.Claims;
+using backend.DTOs.Cart;
 using backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace backend.Controllers
 {

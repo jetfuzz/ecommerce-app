@@ -24,12 +24,16 @@ namespace backend.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
-            if (await _context.Users.AnyAsync(u => u.Email == registerDto.Email))
+
+            var email = registerDto.Email.Trim().ToLowerInvariant();
+            var username = registerDto.Username.Trim();
+
+            if (await _context.Users.AnyAsync(u => u.Email == email))
             {
                 return Conflict(new { message = "Email already exists" });
             }
 
-            if (await _context.Users.AnyAsync(u => u.Username == registerDto.Username))
+            if (await _context.Users.AnyAsync(u => u.Username == username))
             {
                 return Conflict(new { message = "Username already exists" });
             }
@@ -37,8 +41,8 @@ namespace backend.Controllers
             var hasher = new PasswordHasher<User>();
             var user = new User
             {
-                Username = registerDto.Username,
-                Email = registerDto.Email,
+                Username = username,
+                Email = email,
                 PasswordHash = hasher.HashPassword(null!, registerDto.Password),
                 Role = UserRole.User,
             };
@@ -59,7 +63,7 @@ namespace backend.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email.Trim().ToLowerInvariant());
             if (user == null)
             {
                 return Unauthorized(new { message = "Invalid credentials" });

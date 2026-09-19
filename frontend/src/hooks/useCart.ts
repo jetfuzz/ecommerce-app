@@ -10,6 +10,7 @@ import { useAuth } from '../context/AuthContext';
 
 export function useCart() {
   const { isAuthenticated } = useAuth();
+  const [isMutating, setIsMutating] = useState(false);
   const [cartState, setState] = useState<CartState>({ status: 'loading' });
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export function useCart() {
   }, [isAuthenticated]);
 
   async function addToCart(productId: number, quantity: number) {
+    setIsMutating(true);
     try {
       const cart = await addCartItem(productId, quantity);
       setState({ status: 'success', data: cart });
@@ -40,10 +42,13 @@ export function useCart() {
         status: 'error',
         message: err instanceof Error ? err.message : 'Something went wrong',
       });
+    } finally {
+      setIsMutating(false);
     }
   }
 
   async function updateQuantity(itemId: number, quantity: number) {
+    setIsMutating(true);
     try {
       const cart = await updateCartItem(itemId, quantity);
       setState({ status: 'success', data: cart });
@@ -52,10 +57,13 @@ export function useCart() {
         status: 'error',
         message: err instanceof Error ? err.message : 'Something went wrong',
       });
+    } finally {
+      setIsMutating(false);
     }
   }
 
   async function removeFromCart(itemId: number) {
+    setIsMutating(true);
     try {
       const cart = await removeCartItem(itemId);
       setState({ status: 'success', data: cart });
@@ -64,8 +72,10 @@ export function useCart() {
         status: 'error',
         message: err instanceof Error ? err.message : 'Something went wrong',
       });
+    } finally {
+      setIsMutating(false);
     }
   }
 
-  return { cartState, addToCart, removeFromCart, updateQuantity };
+  return { cartState, isMutating, addToCart, removeFromCart, updateQuantity };
 }

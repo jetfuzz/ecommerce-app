@@ -21,6 +21,10 @@
   width: 100%;
 }
 
+.error {
+  color: var(--color-danger);
+}
+
 .imageWrapper {
   width: 130px;
   height: 130px;
@@ -97,9 +101,10 @@
   cursor: pointer;
 }
 
-.quantity button:disabled {
+.quantity button:disabled, .deleteButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .deleteButton {

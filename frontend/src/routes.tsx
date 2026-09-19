@@ -27,7 +27,7 @@ const routes = [
         children: [
           { path: '/login', element: <LoginPage /> },
           { path: '/register', element: <RegisterPage /> },
-        ]
+        ],
       },
       {
         element: <ProtectedRoute />,
@@ -38,9 +38,7 @@ const routes = [
       },
       {
         element: <ProtectedRoute allowedRoles={['Admin']} />,
-        children: [
-          { path: '/admin', element: <AdminPage /> }
-        ],
+        children: [{ path: '/admin', element: <AdminPage /> }],
       },
     ],
   },

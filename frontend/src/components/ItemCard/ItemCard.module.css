@@ -72,3 +72,9 @@
   cursor: pointer;
   background-color: var(--color-primary-hover);
 }
+
+.card button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

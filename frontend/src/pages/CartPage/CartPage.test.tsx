@@ -22,6 +22,7 @@ vi.mock('../../api/checkout', () => ({
 beforeEach(() => {
   vi.mocked(useCartContext).mockReturnValue({
     cartState: { status: 'success', data: mockCart },
+    isMutating: false,
     updateQuantity: vi.fn(),
     removeFromCart: vi.fn(),
     addToCart: vi.fn(),
@@ -48,6 +49,7 @@ describe('CartPage', () => {
           items: [createMockCartItem({ id: 1, quantity: 2 })],
         }),
       },
+      isMutating: false,
       updateQuantity,
       removeFromCart: vi.fn(),
       addToCart: vi.fn(),
@@ -65,6 +67,7 @@ describe('CartPage', () => {
     const removeFromCart = vi.fn();
     vi.mocked(useCartContext).mockReturnValue({
       cartState: { status: 'success', data: mockCart },
+      isMutating: false,
       updateQuantity: vi.fn(),
       removeFromCart,
       addToCart: vi.fn(),

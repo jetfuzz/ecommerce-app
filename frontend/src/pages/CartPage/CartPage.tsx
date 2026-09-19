@@ -6,7 +6,7 @@ import { createCheckoutSession } from '../../api/checkout';
 import { useState } from 'react';
 
 export default function CartPage() {
-  const { cartState, updateQuantity, removeFromCart } = useCartContext();
+  const { cartState, isMutating, updateQuantity, removeFromCart } = useCartContext();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
@@ -54,13 +54,14 @@ export default function CartPage() {
                 <div className={styles.quantity}>
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    disabled={item.quantity <= 1}
+                    disabled={item.quantity <= 1 || isMutating}
                   >
                     -
                   </button>
                   <span>{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    disabled={isMutating}
                   >
                     +
                   </button>
@@ -68,6 +69,7 @@ export default function CartPage() {
                 <button
                   className={styles.deleteButton}
                   onClick={() => removeFromCart(item.id)}
+                  disabled={isMutating}
                   aria-label="Remove item from cart"
                 >
                   <Trash2 size={18} />
@@ -85,12 +87,11 @@ export default function CartPage() {
           <p className={styles.orderTotal}>
             Subtotal: {formatPrice(cart.subtotal)}
           </p>
-          {/* missing styles.error */}
           {checkoutError && <p className={styles.error}>{checkoutError}</p>}
           <button
             className={styles.checkoutBtn}
             onClick={handleCheckout}
-            disabled={isCheckingOut}
+            disabled={isCheckingOut || isMutating}
           >
             {isCheckingOut ? 'Redirecting...' : 'Checkout'}
           </button>

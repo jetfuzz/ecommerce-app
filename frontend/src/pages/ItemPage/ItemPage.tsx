@@ -9,7 +9,7 @@ import { useProduct } from '../../hooks/useProduct';
 export default function ItemPage() {
   const { id } = useParams();
   const productState = useProduct(id ? Number(id) : undefined);
-  const { addToCart } = useCartContext();
+  const { addToCart, isMutating } = useCartContext();
   const [quantity, setQuantity] = useState<number>(1);
   const navigate = useNavigate();
 
@@ -61,6 +61,7 @@ export default function ItemPage() {
             <button
               className={styles.addToCart}
               onClick={() => addToCart(product.id, quantity)}
+              disabled={isMutating}
             >
               Add to cart
             </button>

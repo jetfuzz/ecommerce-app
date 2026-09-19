@@ -9,7 +9,7 @@ interface ItemCardProps {
 }
 
 export default function ItemCard({ product }: ItemCardProps) {
-  const { addToCart } = useCartContext();
+  const { addToCart, isMutating } = useCartContext();
 
   return (
     <div className={styles.card}>
@@ -24,7 +24,7 @@ export default function ItemCard({ product }: ItemCardProps) {
         <h2 className={styles.productTitle}>{product.title}</h2>
       </Link>
       <p className={styles.price}>{formatPrice(product.price)}</p>
-      <button onClick={() => addToCart(product.id, 1)}>Add to cart</button>
+      <button disabled={isMutating} onClick={() => addToCart(product.id, 1)}>Add to cart</button>
     </div>
   );
 }

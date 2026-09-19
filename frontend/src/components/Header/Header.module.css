@@ -6,9 +6,10 @@
   padding: var(--space-3);
 }
 
-header h1 {
-  font-size: var(--text-2xl);
+.logo {
+  font-size: var(--text-xl);
   flex-shrink: 0;
+  font-weight: bold;
 }
 
 header ul {

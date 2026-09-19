@@ -4,18 +4,19 @@ import { useCart } from '../hooks/useCart';
 
 interface CartContextType {
   cartState: CartState;
-  addToCart: (productId: number, quantity: number) => void;
-  updateQuantity: (itemId: number, quantity: number) => void;
-  removeFromCart: (itemId: number) => void;
+  isMutating: boolean;
+  addToCart: (productId: number, quantity: number) => Promise<void>;
+  updateQuantity: (itemId: number, quantity: number) => Promise<void>;
+  removeFromCart: (itemId: number) => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const { cartState, addToCart, updateQuantity, removeFromCart } = useCart();
+  const { cartState, isMutating, addToCart, updateQuantity, removeFromCart } = useCart();
   return (
     <CartContext.Provider
-      value={{ cartState, addToCart, updateQuantity, removeFromCart }}
+      value={{ cartState, isMutating, addToCart, updateQuantity, removeFromCart }}
     >
       {children}
     </CartContext.Provider>

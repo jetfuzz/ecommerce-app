@@ -27,6 +27,7 @@ beforeEach(() => {
   vi.mocked(useCartContext).mockReturnValue({
     addToCart: vi.fn(),
     cartState: { status: 'idle' },
+    isMutating: false,
     updateQuantity: vi.fn(),
     removeFromCart: vi.fn(),
   });
@@ -73,6 +74,7 @@ describe('ItemPage', () => {
     vi.mocked(useCartContext).mockReturnValue({
       addToCart,
       cartState: { status: 'idle' },
+      isMutating: false,
       updateQuantity: vi.fn(),
       removeFromCart: vi.fn(),
     });

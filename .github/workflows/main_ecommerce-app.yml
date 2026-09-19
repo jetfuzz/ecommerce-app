@@ -10,7 +10,7 @@ on:
     paths:
       - 'backend/**'
       - 'backend.Tests/**'
-      - '.github/workflows/**'
+      - '.github/workflows/main_ecommerce-app.yml'
   workflow_dispatch:
 
 jobs:

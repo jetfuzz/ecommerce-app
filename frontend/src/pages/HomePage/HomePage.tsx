@@ -32,7 +32,7 @@ export default function HomePage() {
   return (
     <main className={styles.homePage}>
       <section className={styles.hero}>
-        <h2>Welcome to Bazaar</h2>
+        <h1>Welcome to Bazaar</h1>
         <p>Curated goods for everyday life.</p>
         <Link to="/shop" className={styles.shopButton}>
           Shop Now

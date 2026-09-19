@@ -50,3 +50,8 @@ export type CartState =
   | { status: 'loading' }
   | { status: 'error'; message: string }
   | { status: 'success'; data: Cart };
+
+export interface LoginResponse {
+  token: string;
+  user: User;
+}

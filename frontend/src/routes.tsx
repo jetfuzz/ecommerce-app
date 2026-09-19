@@ -8,6 +8,9 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import AdminPage from './pages/AdminPage/AdminPage';
 import SuccessPage from './pages/SuccessPage/SuccessPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
+import { GuestRoute } from './components/GuestRoute/GuestRoute';
+import UnauthorizedPage from './pages/UnauthorizedPage/UnauthorizedPage';
 
 const routes = [
   {
@@ -18,7 +21,14 @@ const routes = [
       { index: true, element: <HomePage /> },
       { path: '/shop', element: <ShopPage /> },
       { path: '/shop/:id', element: <ItemPage /> },
-      { path: '/login', element: <LoginPage /> },
+      { path: '/unauthorized', element: <UnauthorizedPage /> },
+      {
+        element: <GuestRoute />,
+        children: [
+          { path: '/login', element: <LoginPage /> },
+          { path: '/register', element: <RegisterPage /> },
+        ]
+      },
       {
         element: <ProtectedRoute />,
         children: [
@@ -28,7 +38,9 @@ const routes = [
       },
       {
         element: <ProtectedRoute allowedRoles={['Admin']} />,
-        children: [{ path: '/admin', element: <AdminPage /> }],
+        children: [
+          { path: '/admin', element: <AdminPage /> }
+        ],
       },
     ],
   },

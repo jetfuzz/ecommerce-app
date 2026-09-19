@@ -35,7 +35,7 @@ export default function CartPage() {
 
   return (
     <div>
-      <h2 className={styles.cartTitle}>Shopping Bag</h2>
+      <h1 className={styles.cartTitle}>Shopping Bag</h1>
       <div className={styles.cartPage}>
         <div className={styles.cart}>
           {cart.items.map((item) => (

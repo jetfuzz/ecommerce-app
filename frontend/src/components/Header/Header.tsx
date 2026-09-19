@@ -22,9 +22,9 @@ export default function Header({
 
   return (
     <header className={styles.header}>
-      <h1 className={styles.logo}>
+      <p className={styles.logo}>
         <Link to="/">Bazaar</Link>
-      </h1>
+      </p>
       <form
         className={styles.searchForm}
         onSubmit={(e) => {
@@ -38,6 +38,7 @@ export default function Header({
           placeholder="Search"
           value={searchQuery}
           onChange={handleSearchChange}
+          aria-label="Search products"
         />
         <button type="submit" aria-label="Search">
           <Search size={18} aria-hidden="true" />

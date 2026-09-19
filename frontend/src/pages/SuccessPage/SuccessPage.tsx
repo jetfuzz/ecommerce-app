@@ -23,7 +23,7 @@ export default function SuccessPage() {
   return (
     <div>
       <CheckCircle2 size={64} color="#22c55e" strokeWidth={1.5} />
-      <h2>Thank you for your order!</h2>
+      <h1>Thank you for your order!</h1>
       <p>Your payment was successful.</p>
     </div>
   );

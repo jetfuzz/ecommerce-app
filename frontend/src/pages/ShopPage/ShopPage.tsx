@@ -28,7 +28,7 @@ export default function ShopPage() {
 
   return (
     <div className={styles.shopPage}>
-      <h2 className={styles.shopTitle}>Shop</h2>
+      <h1 className={styles.shopTitle}>Shop</h1>
 
       <fieldset className={styles.categoryFilter}>
         <legend>Categories</legend>

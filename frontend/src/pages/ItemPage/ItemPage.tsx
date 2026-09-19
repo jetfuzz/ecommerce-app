@@ -38,7 +38,7 @@ export default function ItemPage() {
           <img src={product.image ?? undefined} alt={product.title} />
         </div>
         <div className={styles.itemInfo}>
-          <h2>{product.title}</h2>
+          <h1>{product.title}</h1>
           <p className={styles.category}>{product.categoryName}</p>
           <p>{product.description}</p>
           <p className={styles.price}>{formatPrice(product.price)}</p>

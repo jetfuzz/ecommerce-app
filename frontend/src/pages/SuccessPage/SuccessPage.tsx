@@ -1,30 +1,40 @@
 import { CheckCircle2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
-
-type PageStatus = 'loading' | 'success' | 'error';
+import { Link, useSearchParams } from 'react-router';
+import { useOrder } from '../../hooks/useOrder';
+import { formatPrice } from '../../utils/formatPrice';
 
 export default function SuccessPage() {
   const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get('session_id');
-  const [status, setStatus] = useState<PageStatus>('loading');
+  const orderId = Number(searchParams.get('order_id')) || undefined;
+  const orderState = useOrder(orderId);
 
-  useEffect(() => {
-    if (!sessionId) {
-      setStatus('error');
-      return;
-    }
-    setStatus('success');
-  }, [sessionId]);
+  if (orderState.status === 'loading') return <p>Confirming your order...</p>;
+  if (orderState.status === 'error') return <p>{orderState.message}</p>;
 
-  if (status === 'loading') return <p>Confirming your order...</p>;
-  if (status === 'error') return <p>Something went wrong.</p>;
+  const order = orderState.data;
 
   return (
     <div>
       <CheckCircle2 size={64} color="#22c55e" strokeWidth={1.5} />
       <h1>Thank you for your order!</h1>
-      <p>Your payment was successful.</p>
+      <div>
+        <p>Order #{order.id}</p>
+        <h2>Order total: {formatPrice(order.totalAmount)}</h2>
+      </div>
+
+      <ul>
+        {order.items.map((item) => (
+          <li key={item.id}>
+            {item.productImage && (
+              <img src={item.productImage} alt={item.productTitle} width={64} />
+            )}
+            <span>{item.productTitle}</span>
+          </li>
+        ))}
+      </ul>
+
+      {/* <Link to="/orders">View order history</Link> */}
+      <Link to="/shop">Continue shopping</Link>
     </div>
   );
 }

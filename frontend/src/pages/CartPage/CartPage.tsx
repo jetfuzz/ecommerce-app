@@ -28,7 +28,7 @@ export default function CartPage() {
   }
 
   if (cartState.status === 'idle') return null;
-  if (cartState.status === 'loading') return <p><Spinner /></p>;
+  if (cartState.status === 'loading') return <Spinner />;
   if (cartState.status === 'error') return <p>{cartState.message}</p>;
 
   const cart = cartState.data;

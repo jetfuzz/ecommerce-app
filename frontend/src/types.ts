@@ -8,6 +8,12 @@ export interface Product {
   stock: number;
 }
 
+export interface Cart {
+  items: CartItem[];
+  subtotal: number;
+  totalItemCount: number;
+}
+
 export interface CartItem {
   id: number;
   productId: number;
@@ -19,26 +25,24 @@ export interface CartItem {
   productStock: number;
 }
 
-export interface Cart {
-  items: CartItem[];
-  subtotal: number;
-  totalItemCount: number;
-}
-
-export type UserRole = 'Admin' | 'User';
+export type CartState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'error'; message: string }
+  | { status: 'success'; data: Cart };
 
 export interface User {
-  id: string;
-  email: string;
+  id: number;
   username: string;
   role: UserRole;
 }
+
+export type UserRole = 'Admin' | 'User';
 
 export interface AuthState {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
-  isLoading: boolean;
 }
 
 export interface AuthContextType extends AuthState {
@@ -46,13 +50,27 @@ export interface AuthContextType extends AuthState {
   logout: () => void;
 }
 
-export type CartState =
-  | { status: 'idle' }
-  | { status: 'loading' }
-  | { status: 'error'; message: string }
-  | { status: 'success'; data: Cart };
-
 export interface LoginResponse {
   token: string;
   user: User;
+}
+
+export interface Order {
+  id: number;
+  status: OrderStatus;
+  totalAmount: number;
+  createdAt: string;
+  items: OrderItem[];
+}
+
+export type OrderStatus =
+  'Pending' | 'Paid' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+
+export interface OrderItem {
+  id: number;
+  productId: number | null;
+  productTitle: string;
+  productImage: string | null;
+  quantity: number;
+  priceAtPurchase: number;
 }

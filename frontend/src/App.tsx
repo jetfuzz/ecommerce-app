@@ -18,7 +18,7 @@ function App() {
     }
     const timer = setTimeout(() => setIsSlow(true), 3000);
     return () => clearTimeout(timer);
-  }, [productState.status])
+  }, [productState.status]);
 
   const cartItemCount =
     cartState.status === 'success' ? cartState.data.totalItemCount : 0;
@@ -30,12 +30,12 @@ function App() {
         setSearchQuery={setSearchQuery}
         cartItemCount={cartItemCount}
       />
-      {productState.status === 'loading' && 
-        <div role='status'>
+      {productState.status === 'loading' && (
+        <div role="status">
           <Spinner />
           {isSlow && <p>Waking up the server, this can take up to a minute</p>}
         </div>
-      }
+      )}
       {productState.status === 'error' && <p>{productState.message}</p>}
       {productState.status === 'success' && (
         <Outlet

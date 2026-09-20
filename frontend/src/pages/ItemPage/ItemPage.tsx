@@ -19,7 +19,7 @@ export default function ItemPage() {
   const goBack = () => navigate(-1);
 
   if (!id) return <p>Product not found.</p>;
-  if (productState.status === 'loading') return <p><Spinner /></p>;
+  if (productState.status === 'loading') return <Spinner />;
   if (productState.status === 'error') return <p>{productState.message}</p>;
 
   const product = productState.data;

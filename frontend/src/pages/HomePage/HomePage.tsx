@@ -7,27 +7,8 @@ interface HomePageContext {
   products: Product[];
 }
 
-// function getFeaturedProducts(products: Product[]): Product[] {
-//   const seenCategories = new Set<string>();
-//   const featured: Product[] = [];
-//   const MIN_FEATURED_RATING = 4;
-
-//   for (const p of products) {
-//     if (
-//       !seenCategories.has(p.category) &&
-//       p.rating.rate > MIN_FEATURED_RATING
-//     ) {
-//       featured.push(p);
-//       seenCategories.add(p.category);
-//     }
-//   }
-
-//   return featured;
-// }
-
 export default function HomePage() {
   const { products } = useOutletContext<HomePageContext>();
-  // const featured = getFeaturedProducts(products);
 
   return (
     <main className={styles.homePage}>
@@ -42,7 +23,7 @@ export default function HomePage() {
       <section>
         <h3>Featured Products</h3>
         <div className={styles.products}>
-          {products.map((p) => (
+          {products.slice(0, 5).map((p) => (
             <ItemCard key={p.id} product={p} />
           ))}
         </div>

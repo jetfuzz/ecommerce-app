@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           token: storedToken,
           user: JSON.parse(storedUser) as User,
           isAuthenticated: true,
-          isLoading: false,
         };
       } catch (error) {
         console.error(error);
@@ -31,7 +30,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       user: null,
       token: null,
       isAuthenticated: false,
-      isLoading: false,
     };
   });
 
@@ -42,7 +40,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         user: null,
         token: null,
         isAuthenticated: false,
-        isLoading: false,
       });
     window.addEventListener('auth:logout', handler);
     return () => window.removeEventListener('auth:logout', handler);
@@ -55,7 +52,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       token,
       user,
       isAuthenticated: true,
-      isLoading: false,
     });
   };
 
@@ -66,13 +62,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       token: null,
       user: null,
       isAuthenticated: false,
-      isLoading: false,
     });
   };
 
   return (
     <AuthContext.Provider value={{ ...state, login, logout }}>
-      {!state.isLoading ? children : <div>Loading...</div>}
+      {children}
     </AuthContext.Provider>
   );
 };

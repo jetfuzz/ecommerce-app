@@ -4,6 +4,7 @@ import { Trash2 } from 'lucide-react';
 import { useCartContext } from '../../context/CartContext';
 import { createCheckoutSession } from '../../api/checkout';
 import { useState } from 'react';
+import Spinner from '../../components/Spinner/Spinner';
 
 export default function CartPage() {
   const { cartState, isMutating, updateQuantity, removeFromCart } =
@@ -27,7 +28,7 @@ export default function CartPage() {
   }
 
   if (cartState.status === 'idle') return null;
-  if (cartState.status === 'loading') return <p>Loading...</p>;
+  if (cartState.status === 'loading') return <p><Spinner /></p>;
   if (cartState.status === 'error') return <p>{cartState.message}</p>;
 
   const cart = cartState.data;

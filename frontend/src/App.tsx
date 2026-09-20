@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import { useState } from 'react';
 import { useProducts } from './hooks/useProducts';
 import { useCartContext } from './context/CartContext';
+import Spinner from './components/Spinner/Spinner';
 
 function App() {
   const productState = useProducts();
@@ -19,7 +20,7 @@ function App() {
         setSearchQuery={setSearchQuery}
         cartItemCount={cartItemCount}
       />
-      {productState.status === 'loading' && <p>Loading...</p>}
+      {productState.status === 'loading' && <p><Spinner /></p>}
       {productState.status === 'error' && <p>{productState.message}</p>}
       {productState.status === 'success' && (
         <Outlet

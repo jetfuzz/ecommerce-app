@@ -5,6 +5,7 @@ import { formatPrice } from '../../utils/formatPrice';
 import { ArrowLeft } from 'lucide-react';
 import { useCartContext } from '../../context/CartContext';
 import { useProduct } from '../../hooks/useProduct';
+import Spinner from '../../components/Spinner/Spinner';
 
 export default function ItemPage() {
   const { id } = useParams();
@@ -18,7 +19,7 @@ export default function ItemPage() {
   const goBack = () => navigate(-1);
 
   if (!id) return <p>Product not found.</p>;
-  if (productState.status === 'loading') return <p>Loading...</p>;
+  if (productState.status === 'loading') return <p><Spinner /></p>;
   if (productState.status === 'error') return <p>{productState.message}</p>;
 
   const product = productState.data;

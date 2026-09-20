@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import { useCartContext } from '../../context/CartContext';
 import { useProduct } from '../../hooks/useProduct';
 
-const mockProduct: Product = createMockProduct({ id: 1 });
+const mockProduct: Product = createMockProduct({ id: 1, stock: 10 });
 
 vi.mock('../../hooks/useProduct', () => ({
   useProduct: vi.fn(),
@@ -101,6 +101,45 @@ describe('ItemPage', () => {
 
     render(<ItemPage />);
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByText('Loading')).toBeInTheDocument();
+  });
+
+  it('should disable button and show "Out of Stock" when stock is 0', () => {
+    vi.mocked(useParams).mockReturnValue({ id: '1' });
+    vi.mocked(useProduct).mockReturnValue({
+      status: 'success',
+      data: createMockProduct({ id: 1, stock: 0 }),
+    });
+    render(<ItemPage />);
+
+    expect(screen.getByRole('button', { name: 'Out of Stock' })).toBeDisabled();
+  });
+
+  it('should show a low stock message', () => {
+    vi.mocked(useParams).mockReturnValue({ id: '1' });
+    vi.mocked(useProduct).mockReturnValue({
+      status: 'success',
+      data: createMockProduct({ id: 1, stock: 3 }),
+    });
+    render(<ItemPage />);
+
+    expect(screen.getByText('Only 3 left in stock')).toBeInTheDocument();
+  });
+
+  it('should not allow quantity above stock', async () => {
+    vi.mocked(useParams).mockReturnValue({ id: '1' });
+    vi.mocked(useProduct).mockReturnValue({
+      status: 'success',
+      data: createMockProduct({ id: 1, stock: 2 }),
+    });
+    const user = userEvent.setup();
+    render(<ItemPage />);
+
+    await user.click(screen.getByRole('button', { name: '+' }));
+    await user.click(screen.getByRole('button', { name: '+' }));
+    await user.click(screen.getByRole('button', { name: '+' }));
+
+    expect(screen.getByRole('spinbutton')).toHaveValue(2);
+    expect(screen.getByRole('button', { name: '+' })).toBeDisabled();
   });
 });

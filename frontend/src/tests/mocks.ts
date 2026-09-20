@@ -24,6 +24,7 @@ export function createMockCartItem(
     productCategoryName: 'misc',
     productPrice: 10,
     quantity: 1,
+    productStock: 10,
     ...overrides,
   };
 }

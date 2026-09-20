@@ -13,10 +13,17 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const { cartState, isMutating, addToCart, updateQuantity, removeFromCart } = useCart();
+  const { cartState, isMutating, addToCart, updateQuantity, removeFromCart } =
+    useCart();
   return (
     <CartContext.Provider
-      value={{ cartState, isMutating, addToCart, updateQuantity, removeFromCart }}
+      value={{
+        cartState,
+        isMutating,
+        addToCart,
+        updateQuantity,
+        removeFromCart,
+      }}
     >
       {children}
     </CartContext.Provider>

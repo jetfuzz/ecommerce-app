@@ -42,6 +42,9 @@ export default function ItemPage() {
           <p className={styles.category}>{product.categoryName}</p>
           <p>{product.description}</p>
           <p className={styles.price}>{formatPrice(product.price)}</p>
+          {product.stock <= 5 && product.stock > 0 && (
+            <p className={styles.stock}>Only {product.stock} left in stock</p>
+          )}
 
           <div className={styles.buttonGroup}>
             <div className={styles.quantity}>
@@ -51,19 +54,27 @@ export default function ItemPage() {
               <input
                 type="number"
                 min={1}
+                max={product.stock}
                 value={quantity}
                 onChange={(e) =>
-                  setQuantity(Math.max(1, Number(e.target.value) || 1))
+                  setQuantity(
+                    Math.min(
+                      product.stock,
+                      Math.max(1, Number(e.target.value) || 1),
+                    ),
+                  )
                 }
               />
-              <button onClick={increment}>+</button>
+              <button onClick={increment} disabled={quantity >= product.stock}>
+                +
+              </button>
             </div>
             <button
               className={styles.addToCart}
               onClick={() => addToCart(product.id, quantity)}
-              disabled={isMutating}
+              disabled={isMutating || product.stock <= 0}
             >
-              Add to cart
+              {product.stock <= 0 ? 'Out of Stock' : 'Add to cart'}
             </button>
           </div>
         </div>

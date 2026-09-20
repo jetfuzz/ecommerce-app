@@ -16,6 +16,7 @@ export interface CartItem {
   productCategoryName: string | null;
   productPrice: number;
   quantity: number;
+  productStock: number;
 }
 
 export interface Cart {

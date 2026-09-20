@@ -74,7 +74,6 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  align-self: flex-end;
 }
 
 .quantity {
@@ -101,7 +100,8 @@
   cursor: pointer;
 }
 
-.quantity button:disabled, .deleteButton:disabled {
+.quantity button:disabled,
+.deleteButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;

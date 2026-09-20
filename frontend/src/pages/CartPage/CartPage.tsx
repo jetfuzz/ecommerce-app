@@ -6,7 +6,8 @@ import { createCheckoutSession } from '../../api/checkout';
 import { useState } from 'react';
 
 export default function CartPage() {
-  const { cartState, isMutating, updateQuantity, removeFromCart } = useCartContext();
+  const { cartState, isMutating, updateQuantity, removeFromCart } =
+    useCartContext();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
@@ -61,7 +62,7 @@ export default function CartPage() {
                   <span>{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    disabled={isMutating}
+                    disabled={isMutating || item.quantity >= item.productStock}
                   >
                     +
                   </button>

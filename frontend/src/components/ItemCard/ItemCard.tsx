@@ -24,7 +24,12 @@ export default function ItemCard({ product }: ItemCardProps) {
         <h2 className={styles.productTitle}>{product.title}</h2>
       </Link>
       <p className={styles.price}>{formatPrice(product.price)}</p>
-      <button disabled={isMutating} onClick={() => addToCart(product.id, 1)}>Add to cart</button>
+      <button
+        disabled={isMutating || product.stock <= 0}
+        onClick={() => addToCart(product.id, 1)}
+      >
+        {product.stock <= 0 ? 'Out of Stock' : 'Add to cart'}
+      </button>
     </div>
   );
 }

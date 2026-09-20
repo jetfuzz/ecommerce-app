@@ -8,6 +8,12 @@ namespace backend.Data
     {
         public static async Task Initialize(ApplicationDbContext context, IConfiguration config)
         {
+            // RESET: deletes table data and re-seeds on next run
+            //await context.Orders.ExecuteDeleteAsync();
+            //await context.Products.ExecuteDeleteAsync();
+            //await context.Categories.ExecuteDeleteAsync();
+            //await context.Users.ExecuteDeleteAsync();
+
             if (await context.Categories.AnyAsync() || await context.Products.AnyAsync())
             {
                 return;
@@ -179,7 +185,7 @@ namespace backend.Data
                     CategoryId = categories[4].Id,
                     Image =
                         "https://images.unsplash.com/photo-1703319952271-a72d8995c336?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    Stock = 14,
+                    Stock = 0,
                 },
                 new Product
                 {
@@ -190,7 +196,7 @@ namespace backend.Data
                     CategoryId = categories[4].Id,
                     Image =
                         "https://images.unsplash.com/photo-1783265110412-cb699d435cca?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    Stock = 9,
+                    Stock = 2,
                 },
                 new Product
                 {

@@ -33,6 +33,7 @@ namespace backend.Services
                         ProductCategoryName = ci.Product.Category?.Name,
                         ProductPrice = ci.Product.Price,
                         Quantity = ci.Quantity,
+                        ProductStock = ci.Product.Stock,
                     })
                     .ToList(),
                 Subtotal = cart.Sum(ci => ci.Quantity * ci.Product.Price),

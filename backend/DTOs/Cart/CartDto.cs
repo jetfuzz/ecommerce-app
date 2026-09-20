@@ -16,5 +16,6 @@
         public string? ProductCategoryName { get; set; }
         public decimal ProductPrice { get; set; }
         public int Quantity { get; set; }
+        public int ProductStock { get; set; }
     }
 }

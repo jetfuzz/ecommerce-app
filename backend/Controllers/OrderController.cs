@@ -43,6 +43,7 @@ namespace backend.Controllers
                         Id = oi.Id,
                         ProductId = oi.ProductId,
                         ProductTitle = oi.ProductTitle,
+                        ProductImage = oi.ProductImage,
                         Quantity = oi.Quantity,
                         PriceAtPurchase = oi.Price,
                     })
@@ -56,8 +57,8 @@ namespace backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
-            var order = await _context.Orders
-                .Include(o => o.Items)
+            var order = await _context
+                .Orders.Include(o => o.Items)
                 .FirstOrDefaultAsync(o => o.Id == id && o.UserId == userId);
 
             if (order == null)
@@ -71,15 +72,17 @@ namespace backend.Controllers
                 Status = order.Status,
                 TotalAmount = order.TotalAmount,
                 CreatedAt = order.CreatedAt,
-                Items = order.Items.Select(oi => new OrderItemDto
-                {
-                    Id = oi.Id,
-                    ProductId = oi.ProductId,
-                    ProductTitle = oi.ProductTitle,
-                    Quantity = oi.Quantity,
-                    PriceAtPurchase = oi.Price,
-                })
-                .ToList(),
+                Items = order
+                    .Items.Select(oi => new OrderItemDto
+                    {
+                        Id = oi.Id,
+                        ProductId = oi.ProductId,
+                        ProductTitle = oi.ProductTitle,
+                        ProductImage = oi.ProductImage,
+                        Quantity = oi.Quantity,
+                        PriceAtPurchase = oi.Price,
+                    })
+                    .ToList(),
             };
 
             return Ok(dto);

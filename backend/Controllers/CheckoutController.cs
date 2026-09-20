@@ -64,6 +64,7 @@ namespace backend.Controllers
                     {
                         ProductId = item.ProductId,
                         ProductTitle = item.ProductTitle,
+                        ProductImage = item.ProductImage,
                         Quantity = item.Quantity,
                         Price = item.ProductPrice,
                     })
@@ -92,8 +93,7 @@ namespace backend.Controllers
                     })
                     .ToList(),
                 Mode = "payment",
-                SuccessUrl =
-                    $"{_configuration["Frontend:BaseUrl"]}/success?session_id={{CHECKOUT_SESSION_ID}}",
+                SuccessUrl = $"{_configuration["Frontend:BaseUrl"]}/success?order_id={order.Id}",
                 CancelUrl = $"{_configuration["Frontend:BaseUrl"]}/cart",
             };
 

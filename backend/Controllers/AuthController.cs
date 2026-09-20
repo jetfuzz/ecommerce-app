@@ -24,7 +24,6 @@ namespace backend.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
-
             var email = registerDto.Email.Trim().ToLowerInvariant();
             var username = registerDto.Username.Trim();
 
@@ -63,7 +62,9 @@ namespace backend.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email.Trim().ToLowerInvariant());
+            var user = await _context.Users.FirstOrDefaultAsync(u =>
+                u.Email == loginDto.Email.Trim().ToLowerInvariant()
+            );
             if (user == null)
             {
                 return Unauthorized(new { message = "Invalid credentials" });

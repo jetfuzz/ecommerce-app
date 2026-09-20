@@ -16,6 +16,7 @@ namespace backend.DTOs.Order
         public int Id { get; set; }
         public int? ProductId { get; set; }
         public string ProductTitle { get; set; } = string.Empty;
+        public string? ProductImage { get; set; }
         public int Quantity { get; set; }
         public decimal PriceAtPurchase { get; set; }
     }

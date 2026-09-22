@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from 'react';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import api from '../../api/axiosInstance';
 import { useAuth } from '../../context/AuthContext';
 import type { LoginResponse } from '../../types';
@@ -12,7 +12,6 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -25,7 +24,6 @@ export default function LoginPage() {
         password,
       });
       login(res.data.token, res.data.user);
-      navigate('/', { replace: true });
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 401) {
         setError('Invalid email or password.');
@@ -69,6 +67,9 @@ export default function LoginPage() {
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Log in'}
         </button>
+        <p>
+          New Customer? <Link to={'/register'}>Create an Account</Link>
+        </p>
       </form>
     </div>
   );

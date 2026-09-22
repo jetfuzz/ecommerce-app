@@ -2,6 +2,7 @@ import { Search, ShoppingCart } from 'lucide-react';
 import type { ChangeEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import styles from './Header.module.css';
+import UserMenu from '../UserMenu/UserMenu';
 
 interface HeaderProps {
   searchQuery: string;
@@ -22,9 +23,15 @@ export default function Header({
 
   return (
     <header className={styles.header}>
-      <p className={styles.logo}>
-        <Link to="/">Bazaar</Link>
-      </p>
+      <ul>
+        <li className={styles.logo}>
+          <Link to="/">nimbus.</Link>
+        </li>
+        <li>
+          <Link to="/shop">Shop</Link>
+        </li>
+      </ul>
+
       <form
         className={styles.searchForm}
         onSubmit={(e) => {
@@ -44,10 +51,8 @@ export default function Header({
           <Search size={18} aria-hidden="true" />
         </button>
       </form>
+
       <ul>
-        <li>
-          <Link to="/shop">Shop</Link>
-        </li>
         <li>
           <Link
             to="/cart"
@@ -59,6 +64,9 @@ export default function Header({
             )}
             <ShoppingCart size={18} />
           </Link>
+        </li>
+        <li>
+          <UserMenu />
         </li>
       </ul>
     </header>

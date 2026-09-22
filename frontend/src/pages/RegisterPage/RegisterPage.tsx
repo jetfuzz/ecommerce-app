@@ -75,7 +75,6 @@ export default function RegisterPage() {
         password: form.password,
       });
       login(res.data.token, res.data.user);
-      navigate('/', { replace: true });
     } catch {
       navigate('/login', { replace: true });
     } finally {

@@ -13,8 +13,8 @@ export default function HomePage() {
   return (
     <main className={styles.homePage}>
       <section className={styles.hero}>
-        <h1>Welcome to Bazaar</h1>
-        <p>Curated goods for everyday life.</p>
+        <h1>Everyday, elevated.</h1>
+        <p>Inspiring tagline or something. Idk.</p>
         <Link to="/shop" className={styles.shopButton}>
           Shop Now
         </Link>

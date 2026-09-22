@@ -9,7 +9,7 @@
 .logo {
   font-size: var(--text-xl);
   flex-shrink: 0;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 header ul {

@@ -33,7 +33,7 @@ export default function SuccessPage() {
         ))}
       </ul>
 
-      {/* <Link to="/orders">View order history</Link> */}
+      <Link to="/orders">View order history</Link>
       <Link to="/shop">Continue shopping</Link>
     </div>
   );

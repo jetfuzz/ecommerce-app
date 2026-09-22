@@ -11,6 +11,8 @@ import SuccessPage from './pages/SuccessPage/SuccessPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import { GuestRoute } from './components/GuestRoute/GuestRoute';
 import UnauthorizedPage from './pages/UnauthorizedPage/UnauthorizedPage';
+import OrdersPage from './pages/OrdersPage/OrdersPage';
+import OrderDetailsPage from './pages/OrderDetailPage/OrderDetailPage';
 
 const routes = [
   {
@@ -34,6 +36,8 @@ const routes = [
         children: [
           { path: '/cart', element: <CartPage /> },
           { path: '/success', element: <SuccessPage /> },
+          { path: '/orders', element: <OrdersPage /> },
+          { path: '/order/:id', element: <OrderDetailsPage /> },
         ],
       },
       {

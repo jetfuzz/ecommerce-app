@@ -5,6 +5,7 @@ import { useCartContext } from '../../context/CartContext';
 import { createCheckoutSession } from '../../api/checkout';
 import { useState } from 'react';
 import Spinner from '../../components/Spinner/Spinner';
+import { Link } from 'react-router';
 
 export default function CartPage() {
   const { cartState, isMutating, updateQuantity, removeFromCart } =
@@ -33,7 +34,15 @@ export default function CartPage() {
 
   const cart = cartState.data;
 
-  if (cart.items.length === 0) return <p>Your shopping cart is empty</p>;
+  if (cart.items.length === 0)
+    return (
+      <div className={styles.emptyCart}>
+        <h3>You have no items in your cart.</h3>
+        <Link to="/shop" className={styles.shopButton}>
+          Shop Now
+        </Link>
+      </div>
+    );
 
   return (
     <div>

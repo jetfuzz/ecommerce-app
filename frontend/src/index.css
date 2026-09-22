@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 /*
   Josh's Custom CSS Reset
   https://www.joshwcomeau.com/css/custom-css-reset/
@@ -76,6 +75,8 @@ h6 {
   --space-4: 1.5rem;
   --space-5: 2rem;
   --space-6: 3rem;
+  --space-7: 4rem;
+  --space-8: 5rem;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -112,7 +113,7 @@ h6 {
 
 body {
   font-family:
-    'Poppins',
+    'Inter',
     system-ui,
     -apple-system,
     BlinkMacSystemFont,

@@ -1,3 +1,26 @@
+.emptyCart {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-6);
+  gap: var(--space-3);
+}
+
+.emptyCart h3 {
+  font-weight: 600;
+}
+
+.shopButton {
+  color: white;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  padding: var(--space-3) var(--space-5);
+}
+
+.shopButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
 .cartTitle {
   font-size: var(--text-xl);
   font-weight: 700;

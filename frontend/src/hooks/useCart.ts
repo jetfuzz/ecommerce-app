@@ -7,6 +7,7 @@ import {
   updateCartItem,
 } from '../api/cart';
 import { useAuth } from '../context/AuthContext';
+import { getErrorMessage } from '../utils/errors';
 
 export function useCart() {
   const { isAuthenticated } = useAuth();
@@ -26,7 +27,7 @@ export function useCart() {
       } catch (err) {
         setState({
           status: 'error',
-          message: err instanceof Error ? err.message : 'Something went wrong',
+          message: getErrorMessage(err),
         });
       }
     })();
@@ -40,7 +41,7 @@ export function useCart() {
     } catch (err) {
       setState({
         status: 'error',
-        message: err instanceof Error ? err.message : 'Something went wrong',
+        message: getErrorMessage(err),
       });
     } finally {
       setIsMutating(false);
@@ -55,7 +56,7 @@ export function useCart() {
     } catch (err) {
       setState({
         status: 'error',
-        message: err instanceof Error ? err.message : 'Something went wrong',
+        message: getErrorMessage(err),
       });
     } finally {
       setIsMutating(false);
@@ -70,7 +71,7 @@ export function useCart() {
     } catch (err) {
       setState({
         status: 'error',
-        message: err instanceof Error ? err.message : 'Something went wrong',
+        message: getErrorMessage(err),
       });
     } finally {
       setIsMutating(false);

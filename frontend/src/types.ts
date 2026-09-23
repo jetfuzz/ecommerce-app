@@ -25,11 +25,12 @@ export interface CartItem {
   productStock: number;
 }
 
-export type CartState =
-  | { status: 'idle' }
+export type CartState = { status: 'idle' } | AsyncState<Cart>;
+
+export type AsyncState<T> =
   | { status: 'loading' }
   | { status: 'error'; message: string }
-  | { status: 'success'; data: Cart };
+  | { status: 'success'; data: T };
 
 export interface User {
   id: number;

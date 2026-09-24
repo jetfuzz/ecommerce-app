@@ -1,6 +1,6 @@
 import { Search, ShoppingCart } from 'lucide-react';
 import type { ChangeEvent } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import styles from './Header.module.css';
 import UserMenu from '../UserMenu/UserMenu';
 
@@ -23,14 +23,21 @@ export default function Header({
 
   return (
     <header className={styles.header}>
-      <ul>
-        <li className={styles.logo}>
-          <Link to="/">nimbus.</Link>
-        </li>
-        <li>
-          <Link to="/shop">Shop</Link>
-        </li>
-      </ul>
+      <nav aria-label="Primary">
+        <ul className={styles.list}>
+          <li className={styles.logo}>
+            <Link to="/">Zenith</Link>
+          </li>
+          <li>
+            <NavLink
+              to="/shop"
+              className={styles.navLink}
+            >
+              Shop
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
 
       <form
         className={styles.searchForm}
@@ -40,7 +47,7 @@ export default function Header({
         }}
       >
         <input
-          className={styles.searchFormLabel}
+          className={styles.searchInput}
           type="text"
           placeholder="Search"
           value={searchQuery}
@@ -48,11 +55,11 @@ export default function Header({
           aria-label="Search products"
         />
         <button type="submit" aria-label="Search">
-          <Search size={18} aria-hidden="true" />
+          <Search size={18} strokeWidth={1.5} aria-hidden="true" />
         </button>
       </form>
 
-      <ul>
+      <ul className={`${styles.list} ${styles.actions}`}>
         <li>
           <Link
             to="/cart"
@@ -62,7 +69,7 @@ export default function Header({
             {cartItemCount > 0 && (
               <span className={styles.badge}>{cartItemCount}</span>
             )}
-            <ShoppingCart size={18} />
+            <ShoppingCart size={18} strokeWidth={1.5} />
           </Link>
         </li>
         <li>

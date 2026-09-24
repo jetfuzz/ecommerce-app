@@ -1,63 +1,118 @@
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-3);
-  padding: var(--space-3);
+  gap: var(--space-4);
+  height: var(--header-height);
+  padding-inline: var(--space-3);
 }
 
-.logo {
-  font-size: var(--text-xl);
-  flex-shrink: 0;
-  font-weight: 600;
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: -1;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
 }
 
-header ul {
+.list {
   display: flex;
-  list-style-type: none;
-  gap: var(--space-5);
   align-items: center;
+  gap: var(--space-5);
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-header ul li {
-  display: flex;
-  align-items: center;
-  height: 1.5rem;
+.actions {
+  gap: var(--space-4);
+}
+
+.logo {
+  flex-shrink: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.navLink {
+  position: relative;
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+}
+
+.navLink:hover,
+.active {
+  color: var(--color-text);
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background-color: currentColor;
 }
 
 .searchForm {
   flex: 1 1 auto;
   min-width: 0;
-  max-width: 400px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-border);
-  padding: var(--space-2) var(--space-3);
+  max-width: 320px;
+  height: 2.5rem;
   display: flex;
   align-items: center;
+  gap: var(--space-2);
+  padding-inline: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
 }
 
 .searchForm:focus-within {
   border-color: var(--color-primary);
 }
 
-.searchFormLabel {
+.searchInput {
+  flex: 1;
+  min-width: 0;
   border: none;
   outline: none;
   background-color: transparent;
-  width: 100%;
-  min-width: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text);
 }
 
-.searchForm button {
-  border: none;
-  background-color: transparent;
+.searchInput::placeholder {
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--color-text-muted);
 }
 
-.searchForm button:hover {
+.searchForm button {
+  display: flex;
+  border: none;
+  background-color: transparent;
+  color: var(--color-text-muted);
   cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.searchForm button:hover {
+  color: var(--color-text);
 }
 
 .shoppingCart {
@@ -71,45 +126,45 @@ header ul li {
   position: absolute;
   top: -8px;
   right: -9px;
-  background: var(--color-primary);
-  color: white;
-  font-size: var(--text-xs);
-  line-height: 1;
-  min-width: 1.1rem;
-  height: 1.1rem;
+  min-width: 1rem;
+  height: 1rem;
   padding: 0 var(--space-1);
-  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  font-family: var(--font-heading);
+  font-size: 0.625rem;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+}
+
+.header a:focus-visible,
+.searchForm button:focus-visible {
+  outline: 1px solid var(--color-primary);
+  outline-offset: 4px;
 }
 
 @media (max-width: 768px) {
-  .header {
-    padding: var(--space-3) var(--space-4);
-  }
-
-  .shoppingCart svg {
-    max-width: var(--text-base);
+  .list {
+    gap: var(--space-4);
   }
 }
 
 @media (max-width: 480px) {
   .header {
-    padding: var(--space-3) var(--space-3);
-  }
-
-  .header h1 {
-    font-size: var(--text-base);
-  }
-
-  .searchFormLabel::placeholder,
-  .header ul li {
-    font-size: var(--text-sm);
-  }
-
-  .header ul {
     gap: var(--space-3);
+  }
+
+  .list,
+  .actions {
+    gap: var(--space-3);
+  }
+
+  .logo {
+    font-size: var(--text-base);
+    letter-spacing: 0.1em;
   }
 
   .searchForm {

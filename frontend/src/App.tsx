@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useProducts } from './hooks/useProducts';
 import { useCartContext } from './context/CartContext';
 import Spinner from './components/Spinner/Spinner';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const productState = useProducts();
@@ -49,6 +50,7 @@ function App() {
           }}
         />
       )}
+      <Footer />
     </>
   );
 }

@@ -84,6 +84,7 @@ h6 {
   --space-7: 4rem;
   --space-8: 5rem;
 
+  --text-2xs: 0.625rem;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -116,19 +117,24 @@ h6 {
 
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
+
+  --header-height: 4rem;
 }
 
 body {
   font-family: var(--font-sans);
   color: var(--color-text);
   background-color: var(--color-bg);
-  padding-inline: var(--space-4);
+  overflow-x: clip;
 }
 
 #root {
-  max-width: 1280px;
+  max-width: calc(1280px + 2 * var(--space-4));
   margin-inline: auto;
   min-height: 100vh;
+  padding-inline: var(--space-4);
+  display: flex;
+  flex-direction: column;
 }
 
 a {

@@ -4,6 +4,7 @@ import api from '../../api/axiosInstance';
 import { useAuth } from '../../context/AuthContext';
 import type { LoginResponse } from '../../types';
 import axios from 'axios';
+import styles from './LoginPage.module.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -36,10 +37,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h1>Log in</h1>
-        <div>
+    <div className={styles.page}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <h1 className={styles.heading}>Log in</h1>
+
+        <div className={styles.field}>
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -50,7 +52,8 @@ export default function LoginPage() {
             required
           />
         </div>
-        <div>
+
+        <div className={styles.field}>
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -62,13 +65,18 @@ export default function LoginPage() {
           />
         </div>
 
-        {error && <p role="alert">{error}</p>}
+        {error && (
+          <p role="alert" className={styles.error}>
+            {error}
+          </p>
+        )}
 
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className={styles.submit} disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Log in'}
         </button>
-        <p>
-          New Customer? <Link to={'/register'}>Create an Account</Link>
+
+        <p className={styles.footNote}>
+          New Customer? <Link to="/register">Create an Account</Link>
         </p>
       </form>
     </div>

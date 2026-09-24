@@ -4,6 +4,7 @@ import { useState, type ChangeEvent, type SubmitEvent } from 'react';
 import api from '../../api/axiosInstance';
 import type { LoginResponse } from '../../types';
 import axios from 'axios';
+import styles from './RegisterPage.module.css';
 
 interface FormState {
   username: string;
@@ -83,62 +84,74 @@ export default function RegisterPage() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h1>Create account</h1>
+    <div className={styles.page}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <h1 className={styles.heading}>Create account</h1>
 
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          autoComplete="username"
-          value={form.username}
-          onChange={handleChange}
-          required
-        />
+        <div className={styles.field}>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            autoComplete="username"
+            value={form.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          autoComplete="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
+        <div className={styles.field}>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autoComplete="email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          autoComplete="new-password"
-          value={form.password}
-          onChange={handleChange}
-          required
-          minLength={8}
-        />
+        <div className={styles.field}>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autoComplete="new-password"
+            value={form.password}
+            onChange={handleChange}
+            required
+            minLength={8}
+          />
+        </div>
 
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          autoComplete="new-password"
-          value={form.confirmPassword}
-          onChange={handleChange}
-          required
-        />
+        <div className={styles.field}>
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            autoComplete="new-password"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        {error && <p role="alert">{error}</p>}
+        {error && (
+          <p role="alert" className={styles.error}>
+            {error}
+          </p>
+        )}
 
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className={styles.submit} disabled={isLoading}>
           {isLoading ? 'Creating account...' : 'Register'}
         </button>
 
-        <p>
+        <p className={styles.footNote}>
           Already have an account? <Link to="/login">Log in</Link>
         </p>
       </form>

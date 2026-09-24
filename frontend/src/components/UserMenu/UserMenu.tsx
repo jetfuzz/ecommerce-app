@@ -16,7 +16,7 @@ export default function UserMenu() {
   if (!user)
     return (
       <Link to="/login" className={styles.dropdownBtn} aria-label="Sign in">
-        <User size={21} className={styles.userIcon} />
+        <User size={18} strokeWidth={1.5} className={styles.userIcon} />
       </Link>
     );
 
@@ -24,12 +24,12 @@ export default function UserMenu() {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button aria-label="Account menu" className={styles.dropdownBtn}>
-          <User size={21} className={styles.userIcon} />
+          <User size={18} strokeWidth={1.5} className={styles.userIcon} />
         </button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className={styles.menuContent} sideOffset={5}>
+        <DropdownMenu.Content className={styles.menuContent} sideOffset={8} align="end">
           <DropdownMenu.Item asChild className={styles.menuItem}>
             <Link to="/orders">
               <Package />

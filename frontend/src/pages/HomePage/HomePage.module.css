@@ -1,39 +1,98 @@
 .hero {
+  position: relative;
+  height: calc(100svh - var(--header-height));
+  min-height: 480px;
+  overflow: hidden;
+  color: var(--color-primary-text);
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+.heroImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% center;
+  filter: grayscale(1);
+}
+
+.heroInner {
+  position: absolute;
+  inset: 0;
+  width: min(1280px, 100% - 2 * var(--space-4));
+  margin-inline: auto;
+  padding: 12vh var(--space-3) 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: var(--space-8);
+  align-items: flex-start;
   gap: var(--space-3);
 }
 
-.hero h2 {
-  font-size: var(--text-3xl);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  text-align: center;
+.label {
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
 }
 
-.hero p {
-  color: var(--color-text-muted);
-  font-size: var(--text-lg);
-  text-align: center;
+.heroInner h1 {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.sub {
+  font-size: var(--text-base);
+  opacity: 0.8;
 }
 
 .shopButton {
-  color: var(--color-primary-text);
-  background-color: var(--color-primary);
-  border-radius: var(--radius-full);
+  margin-top: var(--space-2);
   padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--color-primary-text);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary-text);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
 }
 
 .shopButton:hover {
-  background-color: var(--color-primary-hover);
+  background-color: var(--color-primary-text);
+  color: var(--color-primary);
 }
 
-h3 {
-  font-size: var(--text-xl);
-  margin: var(--space-3) var(--space-1);
+.credit {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.credit a {
+  color: inherit;
+}
+
+.credit a:hover {
+  text-decoration: underline;
+}
+
+.sectionTitle {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: var(--space-6) var(--space-3) var(--space-2);
 }
 
 .products {
@@ -41,5 +100,5 @@ h3 {
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   justify-content: center;
   gap: var(--space-4);
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-7);
 }

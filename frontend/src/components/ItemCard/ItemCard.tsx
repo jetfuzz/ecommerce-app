@@ -20,16 +20,23 @@ export default function ItemCard({ product }: ItemCardProps) {
           className={styles.productImg}
         />
       </Link>
-      <Link to={`/shop/${product.id}`}>
-        <h2 className={styles.productTitle}>{product.title}</h2>
-      </Link>
-      <p className={styles.price}>{formatPrice(product.price)}</p>
-      <button
-        disabled={isMutating || product.stock <= 0}
-        onClick={() => addToCart(product.id, 1)}
-      >
-        {product.stock <= 0 ? 'Out of Stock' : 'Add to cart'}
-      </button>
+
+      <div className={styles.detailsContainer}>
+        <div className={styles.details}>
+          <Link to={`/shop/${product.id}`} className={styles.titleLink}>
+            <h2 className={styles.productTitle}>{product.title}</h2>
+          </Link>
+          <span className={styles.price}>{formatPrice(product.price)}</span>
+        </div>
+
+        <button
+          className={styles.button}
+          disabled={isMutating || product.stock <= 0}
+          onClick={() => addToCart(product.id, 1)}
+        >
+          {product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
+        </button>
+      </div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Spinner from '../../components/Spinner/Spinner';
 import { useOrders } from '../../hooks/UseOrders';
 import { formatPrice } from '../../utils/formatPrice';
 import { formatDate } from '../../utils/formatDate';
+import styles from './OrdersPage.module.css';
 
 export default function OrdersPage() {
   const orderState = useOrders();
@@ -13,20 +14,28 @@ export default function OrdersPage() {
   const orders = orderState.data;
 
   return (
-    <div>
+    <div className={styles.ordersPage}>
       <h1>Your Orders</h1>
       {orders.length === 0 && <p>You haven't placed any orders yet.</p>}
 
-      <div>
+      <div className={styles.ordersContainer}>
         {orders.map((order) => {
           const [firstItem] = order.items;
 
           return (
-            <div key={order.id}>
-              <p>Order Placed {formatDate(order.createdAt)}</p>
-              <p>Total {formatPrice(order.totalAmount)}</p>
-              <p>Order # {order.id}</p>
-              <p>Order status {order.status}</p>
+            <div key={order.id} className={styles.order}>
+              <div className={styles.orderDetails}>
+                <div>
+                  <p>Order Placed</p>
+                  <p>{formatDate(order.createdAt)}</p>
+                </div>
+                <div>
+                  <p>Total</p>
+                  <p> {formatPrice(order.totalAmount)}</p>
+                </div>
+                <p>Order # {order.id}</p>
+                <p>Order status {order.status}</p>
+              </div>
               <div>
                 {firstItem.productImage && (
                   <img

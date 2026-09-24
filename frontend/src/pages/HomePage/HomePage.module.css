@@ -21,7 +21,7 @@
 }
 
 .shopButton {
-  color: white;
+  color: var(--color-primary-text);
   background-color: var(--color-primary);
   border-radius: var(--radius-full);
   padding: var(--space-3) var(--space-5);

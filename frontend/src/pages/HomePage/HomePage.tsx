@@ -13,10 +13,10 @@ export default function HomePage() {
   return (
     <main className={styles.homePage}>
       <section className={styles.hero}>
-        <h1>Everyday, elevated.</h1>
-        <p>Inspiring tagline or something. Idk.</p>
+        <h1>Explore Further</h1>
+        <p>Gear built for wherever you're headed.</p>
         <Link to="/shop" className={styles.shopButton}>
-          Shop Now
+          Shop Collection
         </Link>
       </section>
 

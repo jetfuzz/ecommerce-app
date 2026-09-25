@@ -5,6 +5,7 @@ import { useProducts } from './hooks/useProducts';
 import { useCartContext } from './context/CartContext';
 import Spinner from './components/Spinner/Spinner';
 import Footer from './components/Footer/Footer';
+import styles from './styles/statusPage.module.css';
 
 function App() {
   const productState = useProducts();
@@ -32,16 +33,20 @@ function App() {
         cartItemCount={cartItemCount}
       />
       {productState.status === 'loading' && (
-        <div role="status">
+        <div role="status" className={styles.statusPage}>
           <Spinner />
           {isSlow && (
-            <p style={{ textAlign: 'center' }}>
+            <p className={styles.statusMessage}>
               Waking up the server, this can take up to a minute
             </p>
           )}
         </div>
       )}
-      {productState.status === 'error' && <p>{productState.message}</p>}
+      {productState.status === 'error' && (
+        <div className={styles.statusPage}>
+          <p className={styles.errorMessage}>{productState.message}</p>
+        </div>
+      )}
       {productState.status === 'success' && (
         <Outlet
           context={{

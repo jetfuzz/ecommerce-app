@@ -1,0 +1,42 @@
+.statusPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: 420px;
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-3);
+  text-align: center;
+}
+
+.heading {
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.message {
+  color: var(--color-text-muted);
+}
+
+.errorMessage {
+  color: var(--color-danger);
+}
+
+.button {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: var(--color-primary-text);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background-color var(--transition-fast);
+}
+
+.button:hover {
+  background-color: var(--color-primary-hover);
+}

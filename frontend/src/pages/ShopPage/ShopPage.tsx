@@ -9,10 +9,13 @@ interface ShopContext {
   searchQuery: string;
 }
 
+type SortOption = 'default' | 'price-asc' | 'price-desc' | 'title-asc';
+
 export default function ShopPage() {
   const { products, searchQuery } = useOutletContext<ShopContext>();
   const categories = [...new Set(products.map((p) => p.categoryName))];
   const [selected, setSelected] = useState<string[]>([]);
+  const [sort, setSort] = useState<SortOption>('default');
 
   function toggleCategory(category: string): void {
     setSelected((prev) =>
@@ -25,6 +28,19 @@ export default function ShopPage() {
   const filteredProducts = products
     .filter((p) => selected.length === 0 || selected.includes(p.categoryName))
     .filter((p) => p.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sort) {
+      case 'price-asc':
+        return a.price - b.price;
+      case 'price-desc':
+        return b.price - a.price;
+      case 'title-asc':
+        return a.title.localeCompare(b.title);
+      default:
+        return 0;
+    }
+  });
 
   return (
     <div className={styles.shopPage}>
@@ -44,11 +60,46 @@ export default function ShopPage() {
         ))}
       </fieldset>
 
+      <div className={styles.toolbar}>
+        <p className={styles.resultCount}>
+          {sortedProducts.length}{' '}
+          {sortedProducts.length === 1 ? 'result' : 'results'}
+          {selected.length > 0 && (
+            <span className={styles.activeFilters}>
+              {selected.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  className={styles.filterChip}
+                  onClick={() => toggleCategory(category)}
+                  aria-label={`Remove ${category} filter`}
+                >
+                  {category} ✕
+                </button>
+              ))}
+            </span>
+          )}
+        </p>
+
+        <label className={styles.sortControl}>
+          Sort
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as SortOption)}
+          >
+            <option value="default">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="title-asc">Name: A to Z</option>
+          </select>
+        </label>
+      </div>
+
       <div className={styles.shopItems}>
-        {filteredProducts.length === 0 ? (
-          <p>No results.</p>
+        {sortedProducts.length === 0 ? (
+          <p className={styles.noResults}>No results.</p>
         ) : (
-          filteredProducts.map((p) => <ItemCard key={p.id} product={p} />)
+          sortedProducts.map((p) => <ItemCard key={p.id} product={p} />)
         )}
       </div>
     </div>

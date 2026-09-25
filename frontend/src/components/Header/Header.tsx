@@ -1,4 +1,4 @@
-import { Search, ShoppingCart } from 'lucide-react';
+import { Search, ShoppingBag } from 'lucide-react';
 import type { ChangeEvent } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import styles from './Header.module.css';
@@ -31,7 +31,9 @@ export default function Header({
           <li>
             <NavLink
               to="/shop"
-              className={styles.navLink}
+              className={({ isActive }) =>
+                isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+              }
             >
               Shop
             </NavLink>
@@ -69,7 +71,7 @@ export default function Header({
             {cartItemCount > 0 && (
               <span className={styles.badge}>{cartItemCount}</span>
             )}
-            <ShoppingCart size={18} strokeWidth={1.5} />
+            <ShoppingBag size={18} strokeWidth={1.5} />
           </Link>
         </li>
         <li>

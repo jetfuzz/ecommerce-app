@@ -37,7 +37,7 @@ describe('CartPage', () => {
   it('disables decrement button when item quantity is 1', () => {
     render(<CartPage />);
 
-    expect(screen.getByRole('button', { name: '-' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Decrease quantity' })).toBeDisabled();
   });
 
   it('calls updateQuantity with correct values', async () => {
@@ -57,9 +57,9 @@ describe('CartPage', () => {
     const user = userEvent.setup();
     render(<CartPage />);
 
-    await user.click(screen.getByRole('button', { name: '+' }));
+    await user.click(screen.getByRole('button', { name: 'Increase quantity' }));
     expect(updateQuantity).toHaveBeenCalledWith(1, 3);
-    await user.click(screen.getByRole('button', { name: '-' }));
+    await user.click(screen.getByRole('button', { name: 'Decrease quantity' }));
     expect(updateQuantity).toHaveBeenCalledWith(1, 1);
   });
 

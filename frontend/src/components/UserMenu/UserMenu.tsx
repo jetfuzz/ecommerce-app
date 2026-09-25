@@ -29,7 +29,11 @@ export default function UserMenu() {
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className={styles.menuContent} sideOffset={8} align="end">
+        <DropdownMenu.Content
+          className={styles.menuContent}
+          sideOffset={8}
+          align="end"
+        >
           <DropdownMenu.Item asChild className={styles.menuItem}>
             <Link to="/orders">
               <Package />

@@ -1,6 +1,6 @@
 import { formatPrice } from '../../utils/formatPrice';
 import styles from './CartPage.module.css';
-import { Trash2 } from 'lucide-react';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { useCartContext } from '../../context/CartContext';
 import { createCheckoutSession } from '../../api/checkout';
 import { useState } from 'react';
@@ -66,15 +66,17 @@ export default function CartPage() {
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     disabled={item.quantity <= 1 || isMutating}
+                    aria-label="Decrease quantity"
                   >
-                    -
+                    <Minus size={14} strokeWidth={1.5} aria-hidden="true" />
                   </button>
                   <span>{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     disabled={isMutating || item.quantity >= item.productStock}
+                    aria-label="Increase quantity"
                   >
-                    +
+                    <Plus size={14} strokeWidth={1.5} aria-hidden="true" />
                   </button>
                 </div>
                 <button
@@ -83,7 +85,7 @@ export default function CartPage() {
                   disabled={isMutating}
                   aria-label="Remove item from cart"
                 >
-                  <Trash2 size={18} />
+                  <Trash2 size={18} strokeWidth={1.5} />
                 </button>
                 <p className={styles.price}>
                   {formatPrice(item.productPrice * item.quantity)}
@@ -96,7 +98,8 @@ export default function CartPage() {
         <div className={styles.orderSummary}>
           <h3>Order Summary</h3>
           <p className={styles.orderTotal}>
-            Subtotal: {formatPrice(cart.subtotal)}
+            <span>Subtotal</span>
+            <span>{formatPrice(cart.subtotal)}</span>
           </p>
           {checkoutError && <p className={styles.error}>{checkoutError}</p>}
           <button

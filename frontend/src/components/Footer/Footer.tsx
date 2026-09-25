@@ -14,8 +14,7 @@ export default function Footer() {
         <Link to="/orders">Orders</Link>
       </nav>
 
-      <p className={styles.copy}>© {new Date().getFullYear()} 
-      </p>
+      <p className={styles.copy}>© {new Date().getFullYear()}</p>
     </footer>
   );
 }

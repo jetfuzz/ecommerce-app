@@ -1,17 +1,20 @@
-span {
+.wrapper {
   display: flex;
   justify-content: center;
   padding: var(--space-6);
 }
 
 .spin {
+  color: var(--color-text-muted);
   animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
+
 .hidden {
   position: absolute;
   width: 1px;

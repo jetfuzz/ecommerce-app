@@ -13,10 +13,15 @@ export default function ItemCard({ product }: ItemCardProps) {
 
   return (
     <div className={styles.card}>
-      <Link to={`/shop/${product.id}`} className={styles.imageWrapper}>
+      <Link
+        to={`/shop/${product.id}`}
+        className={styles.imageWrapper}
+        aria-hidden="true"
+        tabIndex={-1}
+      >
         <img
           src={product.image ?? undefined}
-          alt={product.title}
+          alt=""
           className={styles.productImg}
         />
       </Link>

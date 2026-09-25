@@ -61,12 +61,12 @@ describe('ItemPage', () => {
     const user = userEvent.setup();
     render(<ItemPage />);
 
-    await user.click(screen.getByRole('button', { name: '-' }));
-    await user.click(screen.getByRole('button', { name: '-' }));
-    await user.click(screen.getByRole('button', { name: '-' }));
+    await user.click(screen.getByRole('button', { name: 'Decrease quantity' }));
+    await user.click(screen.getByRole('button', { name: 'Decrease quantity' }));
+    await user.click(screen.getByRole('button', { name: 'Decrease quantity' }));
 
     expect(screen.getByRole('spinbutton')).toHaveValue(1);
-    expect(screen.getByRole('button', { name: '-' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Decrease quantity' })).toBeDisabled();
   });
 
   it('should call addToCart with the correct quantity', async () => {
@@ -87,10 +87,10 @@ describe('ItemPage', () => {
     const user = userEvent.setup();
     render(<ItemPage />);
 
-    await user.click(screen.getByRole('button', { name: '+' }));
-    await user.click(screen.getByRole('button', { name: '+' }));
-    await user.click(screen.getByRole('button', { name: '-' }));
-    await user.click(screen.getByRole('button', { name: 'Add to cart' }));
+    await user.click(screen.getByRole('button', { name: 'Increase quantity' }));
+    await user.click(screen.getByRole('button', { name: 'Increase quantity' }));
+    await user.click(screen.getByRole('button', { name: 'Decrease quantity' }));
+    await user.click(screen.getByRole('button', { name: 'Add to Cart' }));
 
     expect(addToCart).toHaveBeenCalledWith(mockProduct.id, 2);
   });
@@ -135,11 +135,11 @@ describe('ItemPage', () => {
     const user = userEvent.setup();
     render(<ItemPage />);
 
-    await user.click(screen.getByRole('button', { name: '+' }));
-    await user.click(screen.getByRole('button', { name: '+' }));
-    await user.click(screen.getByRole('button', { name: '+' }));
+    await user.click(screen.getByRole('button', { name: 'Increase quantity' }));
+    await user.click(screen.getByRole('button', { name: 'Increase quantity' }));
+    await user.click(screen.getByRole('button', { name: 'Increase quantity' }));
 
     expect(screen.getByRole('spinbutton')).toHaveValue(2);
-    expect(screen.getByRole('button', { name: '+' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Increase quantity' })).toBeDisabled();
   });
 });

@@ -1,6 +1,6 @@
 import { formatPrice } from '../../utils/formatPrice';
 import styles from './CartPage.module.css';
-import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Info, Lock, Minus, Plus, Trash2 } from 'lucide-react';
 import { useCartContext } from '../../context/CartContext';
 import { createCheckoutSession } from '../../api/checkout';
 import { useState } from 'react';
@@ -46,7 +46,7 @@ export default function CartPage() {
 
   return (
     <div>
-      <h1 className={styles.cartTitle}>My Cart</h1>
+      <h1 className={styles.cartTitle}>My Cart ({cart.totalItemCount})</h1>
       <div className={styles.cartPage}>
         <div className={styles.cart}>
           {cart.items.map((item) => (
@@ -98,17 +98,41 @@ export default function CartPage() {
         <div className={styles.orderSummary}>
           <h3>Order Summary</h3>
           <p className={styles.orderTotal}>
-            <span>Subtotal</span>
+            <span>Estimated total</span>
             <span>{formatPrice(cart.subtotal)}</span>
           </p>
-          {checkoutError && <p className={styles.error}>{checkoutError}</p>}
+
+          {checkoutError && (
+            <p className={styles.error} role="alert">
+              {checkoutError}
+            </p>
+          )}
+
           <button
             className={styles.checkoutBtn}
             onClick={handleCheckout}
             disabled={isCheckingOut || isMutating}
           >
-            {isCheckingOut ? 'Redirecting...' : 'Checkout'}
+            <span>{isCheckingOut ? 'Redirecting...' : 'Checkout'}</span>
+            {!isCheckingOut && (
+              <Lock size={14} strokeWidth={1.5} aria-hidden="true" />
+            )}
           </button>
+
+          <div className={styles.testMode}>
+            <Info
+              size={16}
+              strokeWidth={1.5}
+              aria-hidden="true"
+              className={styles.testModeIcon}
+            />
+            <p>
+              <span className={styles.testModeLabel}>Test mode</span>
+              This is a demo store, no real charges occur. Use card{' '}
+              <span className={styles.testCard}>4242 4242 4242 4242</span> with
+              any future expiry and any CVC.
+            </p>
+          </div>
         </div>
       </div>
     </div>

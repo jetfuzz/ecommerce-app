@@ -8,13 +8,19 @@ export default function Footer() {
         Zenith
       </Link>
 
-      <nav aria-label="Footer" className={styles.nav}>
-        <Link to="/shop">Shop</Link>
-        <Link to="/cart">Cart</Link>
-        <Link to="/orders">Orders</Link>
-      </nav>
-
-      <p className={styles.copy}>© {new Date().getFullYear()}</p>
+      <div className={styles.meta}>
+        <a href="https://github.com/jetfuzz" target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+        <a
+          href="https://www.linkedin.com/in/jordanrfredericks/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          LinkedIn
+        </a>
+        <span>© {new Date().getFullYear()}</span>
+      </div>
     </footer>
   );
 }

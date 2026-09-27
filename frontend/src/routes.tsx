@@ -6,7 +6,6 @@ import ShopPage from './pages/ShopPage/ShopPage';
 import ItemPage from './pages/ItemPage/ItemPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
-import AdminPage from './pages/AdminPage/AdminPage';
 import SuccessPage from './pages/SuccessPage/SuccessPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import { GuestRoute } from './components/GuestRoute/GuestRoute';
@@ -42,7 +41,7 @@ const routes = [
       },
       {
         element: <ProtectedRoute allowedRoles={['Admin']} />,
-        children: [{ path: '/admin', element: <AdminPage /> }],
+        // children: [{ path: '/admin', element: <AdminPage /> }],
       },
     ],
   },

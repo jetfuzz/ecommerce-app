@@ -66,7 +66,9 @@ describe('ItemPage', () => {
     await user.click(screen.getByRole('button', { name: 'Decrease quantity' }));
 
     expect(screen.getByRole('spinbutton')).toHaveValue(1);
-    expect(screen.getByRole('button', { name: 'Decrease quantity' })).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Decrease quantity' }),
+    ).toBeDisabled();
   });
 
   it('should call addToCart with the correct quantity', async () => {
@@ -140,6 +142,8 @@ describe('ItemPage', () => {
     await user.click(screen.getByRole('button', { name: 'Increase quantity' }));
 
     expect(screen.getByRole('spinbutton')).toHaveValue(2);
-    expect(screen.getByRole('button', { name: 'Increase quantity' })).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Increase quantity' }),
+    ).toBeDisabled();
   });
 });

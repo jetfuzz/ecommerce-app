@@ -27,22 +27,25 @@
   letter-spacing: 0.14em;
 }
 
-.nav {
+.meta {
   display: flex;
+  align-items: center;
   gap: var(--space-5);
+  color: var(--color-text-muted);
 }
 
-.nav a {
-  color: var(--color-text-muted);
+.meta a {
   transition: color var(--transition-fast);
 }
 
-.nav a:hover {
+.meta a:hover {
   color: var(--color-text);
 }
 
-.copy {
-  color: var(--color-text-muted);
+.logo:focus-visible,
+.meta a:focus-visible {
+  outline: 1px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 @media (max-width: 480px) {

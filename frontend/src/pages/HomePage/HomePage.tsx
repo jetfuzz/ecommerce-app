@@ -17,6 +17,7 @@ export default function HomePage() {
           className={styles.heroImg}
           src="/giacomo-berardi-vDZHL3klJsQ-unsplash.jpg"
           alt="Skier ascending a snow ridge"
+          fetchPriority="high"
         />
         <div className={styles.heroInner}>
           <p className={styles.label}>FW26 / Collection 01</p>

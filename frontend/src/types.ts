@@ -4,8 +4,23 @@ export interface Product {
   price: number;
   description: string;
   categoryName: string;
+  categoryId: number;
   image: string | null;
   stock: number;
+}
+
+export interface CreateProductPayload {
+  title: string;
+  price: number;
+  description: string;
+  categoryId: number;
+  image: string | null;
+  stock: number;
+}
+
+export interface Category {
+  id: number;
+  name: string;
 }
 
 export interface Cart {

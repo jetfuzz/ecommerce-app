@@ -22,7 +22,9 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories()
         {
-            var categories = await _context.Categories.ToListAsync();
+            var categories = await _context.Categories
+                .OrderBy(c => c.Id)
+                .ToListAsync();
             var dto = categories.Select(c => new CategoryDto
             {
                 Id = c.Id,

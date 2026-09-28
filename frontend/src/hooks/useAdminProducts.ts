@@ -36,11 +36,6 @@ export function useAdminProducts() {
           data: [...prev.data, newProduct],
         };
       });
-    } catch (err) {
-      setState({
-        status: 'error',
-        message: getErrorMessage(err),
-      });
     } finally {
       setIsMutating(false);
     }
@@ -59,11 +54,6 @@ export function useAdminProducts() {
           ),
         };
       });
-    } catch (err) {
-      setState({
-        status: 'error',
-        message: getErrorMessage(err),
-      });
     } finally {
       setIsMutating(false);
     }
@@ -79,11 +69,6 @@ export function useAdminProducts() {
           ...prev,
           data: prev.data.filter((p) => p.id !== id),
         };
-      });
-    } catch (err) {
-      setState({
-        status: 'error',
-        message: getErrorMessage(err),
       });
     } finally {
       setIsMutating(false);

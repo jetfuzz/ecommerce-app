@@ -12,6 +12,10 @@ import { GuestRoute } from './components/GuestRoute/GuestRoute';
 import UnauthorizedPage from './pages/UnauthorizedPage/UnauthorizedPage';
 import OrdersPage from './pages/OrdersPage/OrdersPage';
 import OrderDetailsPage from './pages/OrderDetailPage/OrderDetailPage';
+import { redirect } from 'react-router';
+import AdminCategoriesPage from './pages/AdminCategoriesPage/AdminCategoriesPage';
+import AdminProductsPage from './pages/AdminProductsPage/AdminProductsPage';
+import AdminLayout from './pages/AdminLayout/AdminLayout';
 
 const routes = [
   {
@@ -40,8 +44,18 @@ const routes = [
         ],
       },
       {
-        element: <ProtectedRoute allowedRoles={['Admin']} />,
-        // children: [{ path: '/admin', element: <AdminPage /> }],
+        path: 'admin',
+        element: <AdminLayout />,
+        children: [
+          {
+            element: <ProtectedRoute allowedRoles={['Admin']} />,
+            children: [
+              { index: true, loader: () => redirect('/admin/products') },
+              { path: 'categories', element: <AdminCategoriesPage /> },
+              { path: 'products', element: <AdminProductsPage /> },
+            ],
+          },
+        ],
       },
     ],
   },

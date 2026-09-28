@@ -40,11 +40,6 @@ export function useCategories() {
           data: [...prev.data, newCategory],
         };
       });
-    } catch (err) {
-      setState({
-        status: 'error',
-        message: getErrorMessage(err),
-      });
     } finally {
       setIsMutating(false);
     }
@@ -63,11 +58,6 @@ export function useCategories() {
           ),
         };
       });
-    } catch (err) {
-      setState({
-        status: 'error',
-        message: getErrorMessage(err),
-      });
     } finally {
       setIsMutating(false);
     }
@@ -83,11 +73,6 @@ export function useCategories() {
           ...prev,
           data: prev.data.filter((c) => c.id !== id),
         };
-      });
-    } catch (err) {
-      setState({
-        status: 'error',
-        message: getErrorMessage(err),
       });
     } finally {
       setIsMutating(false);

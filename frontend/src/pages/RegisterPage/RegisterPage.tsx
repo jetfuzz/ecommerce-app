@@ -4,7 +4,7 @@ import { useState, type ChangeEvent, type SubmitEvent } from 'react';
 import api from '../../api/axiosInstance';
 import type { LoginResponse } from '../../types';
 import axios from 'axios';
-import styles from './RegisterPage.module.css';
+import styles from '../../styles/authPage.module.css';
 
 interface FormState {
   username: string;

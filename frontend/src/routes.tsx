@@ -44,11 +44,11 @@ const routes = [
         ],
       },
       {
-        path: 'admin',
-        element: <AdminLayout />,
+        element: <ProtectedRoute allowedRoles={['Admin']} />,
         children: [
           {
-            element: <ProtectedRoute allowedRoles={['Admin']} />,
+            path: 'admin',
+            element: <AdminLayout />,
             children: [
               { index: true, loader: () => redirect('/admin/products') },
               { path: 'categories', element: <AdminCategoriesPage /> },

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Check, Pencil, Trash2, X } from 'lucide-react';
 import type { Category } from '../../types';
 import table from '../../styles/adminTable.module.css';
-import styles from './CategoryRow.module.css';
+import styles from '../../styles/categoryRow.module.css';
 
 interface CategoryRowProps {
   category: Category;
@@ -27,12 +27,10 @@ export function CategoryRow({
 
   async function save() {
     const name = draft.trim();
-
     if (!name || name === category.name) {
       setIsEditing(false);
       return;
     }
-
     try {
       await onUpdate(category.id, name);
       setIsEditing(false);

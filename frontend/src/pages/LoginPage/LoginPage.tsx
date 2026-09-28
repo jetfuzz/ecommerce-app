@@ -4,7 +4,7 @@ import api from '../../api/axiosInstance';
 import { useAuth } from '../../context/AuthContext';
 import type { LoginResponse } from '../../types';
 import axios from 'axios';
-import styles from './LoginPage.module.css';
+import styles from '../../styles/authPage.module.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');

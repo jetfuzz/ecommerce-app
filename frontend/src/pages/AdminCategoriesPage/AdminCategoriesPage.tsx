@@ -8,34 +8,40 @@ import { ConfirmDialog } from '../../components/ConfirmDialog/ConfirmDialog';
 import { useConfirmDelete } from '../../hooks/useConfirmDelete';
 import table from '../../styles/adminTable.module.css';
 import styles from './AdminCategoriesPage.module.css';
+import { NewCategoryRow } from '../../components/NewCategoryRow/NewCategoryRow';
 
 export default function AdminCategoriesPage() {
-  const { state, isMutating, updateCategory, deleteCategory } =
+  const { state, isMutating, createCategory, updateCategory, deleteCategory } =
     useCategories();
   const [error, setError] = useState<string | null>(null);
   const confirmDelete = useConfirmDelete<Category>(
     (category) => deleteCategory(category.id),
     (err) => setError(getErrorMessage(err)),
   );
+  const [isAdding, setIsAdding] = useState(false);
 
-  // async function handleCreate(name: string) {
-  //   try {
-  //     await createCategory(name);
-  //   } catch (err) {
-  //     setError(getErrorMessage(err));
-  //     throw err;
-  //   }
-  // }
+  async function handleCreate(name: string) {
+    setIsAdding(true);
+    try {
+      await createCategory(name);
+    } catch (err) {
+      setError(getErrorMessage(err));
+      throw err;
+    }
+  }
 
   async function handleEdit(id: number, name: string) {
+    setError(null);
     try {
       await updateCategory(id, name);
     } catch (err) {
       setError(getErrorMessage(err));
+      throw err;
     }
   }
 
   function handleRequestDelete(id: number) {
+    setError(null);
     if (state.status !== 'success') return;
     const category = state.data.find((c) => c.id === id);
     if (category) confirmDelete.request(category);
@@ -49,11 +55,18 @@ export default function AdminCategoriesPage() {
       </p>
     );
 
+  const categories = state.data;
+
   return (
     <div>
       <div className={styles.header}>
         <h1 className={styles.title}>Categories</h1>
-        <button type="button" className={styles.addButton}>
+        <button
+          type="button" 
+          className={styles.addButton}
+          onClick={() => { setError(null); setIsAdding(true); }}
+          disabled={isAdding}
+        >
           Add Category
         </button>
       </div>
@@ -64,7 +77,7 @@ export default function AdminCategoriesPage() {
         </p>
       )}
 
-      {state.data.length === 0 ? (
+      {categories.length === 0 ? (
         <p className={table.empty}>No categories yet.</p>
       ) : (
         <table className={table.table} aria-label="categories">
@@ -82,7 +95,7 @@ export default function AdminCategoriesPage() {
             </tr>
           </thead>
           <tbody>
-            {state.data.map((category) => (
+            {categories.map((category) => (
               <CategoryRow
                 key={category.id}
                 category={category}
@@ -91,6 +104,13 @@ export default function AdminCategoriesPage() {
                 onDelete={handleRequestDelete}
               />
             ))}
+            {isAdding && (
+              <NewCategoryRow
+                isMutating={isMutating}
+                onCreate={handleCreate}
+                onClose={() => setIsAdding(false)}
+              />
+            )}
           </tbody>
         </table>
       )}

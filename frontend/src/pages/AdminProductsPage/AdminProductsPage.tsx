@@ -1,7 +1,7 @@
 import { useAdminProducts } from '../../hooks/useAdminProducts';
 import { useCategories } from '../../hooks/useCategories';
 import Spinner from '../../components/Spinner/Spinner';
-import styles from './AdminProductsPage.module.css';
+import styles from '../../styles/adminPage.module.css';
 import table from '../../styles/adminTable.module.css';
 import { useState } from 'react';
 import { ProductRow } from '../../components/ProductRow/ProductRow';
@@ -45,17 +45,22 @@ export default function AdminProductsPage() {
 
   if (state.status === 'loading' || categoriesState.status === 'loading')
     return <Spinner />;
-  if (state.status === 'error') return <p>{state.message}</p>;
+  if (state.status === 'error')
+    return (
+      <p className={styles.error}>{state.message}</p>
+    );
   if (categoriesState.status === 'error')
-    return <p>{categoriesState.message}</p>;
+    return (
+      <p className={styles.error}>{categoriesState.message}</p>
+    );
 
   const products = state.data;
   const categories = categoriesState.data;
 
   return (
     <div>
-      <div>
-        <h1>Products</h1>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Products</h1>
         <button
           type="button"
           className={styles.addButton}
@@ -78,49 +83,51 @@ export default function AdminProductsPage() {
       {products.length === 0 ? (
         <p className={table.empty}>No products yet.</p>
       ) : (
-        <table className={table.table} aria-label="products">
-          <thead>
-            <tr>
-              <th className={table.headCell} scope="col">
-                ID
-              </th>
-              <th className={table.headCell} scope="col">
-                Image
-              </th>
-              <th className={table.headCell} scope="col">
-                Title
-              </th>
-              <th className={table.headCell} scope="col">
-                Description
-              </th>
-              <th className={table.headCell} scope="col">
-                Category
-              </th>
-              <th className={table.headCell} scope="col">
-                Price
-              </th>
-              <th className={table.headCell} scope="col">
-                Stock
-              </th>
-              <th className={table.headCell} scope="col">
-                <span className={table.visuallyHidden}>Actions</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <ProductRow
-                key={product.id}
-                product={product}
-                onEdit={(product) => {
-                  setError(null);
-                  setEditing(product);
-                }}
-                onDelete={handleRequestDelete}
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className={table.tableScroll}>
+          <table className={table.table} aria-label="products">
+            <thead>
+              <tr>
+                <th className={table.headCell} scope="col">
+                  ID
+                </th>
+                <th className={table.headCell} scope="col">
+                  Image
+                </th>
+                <th className={table.headCell} scope="col">
+                  Title
+                </th>
+                <th className={table.headCell} scope="col">
+                  Description
+                </th>
+                <th className={table.headCell} scope="col">
+                  Category
+                </th>
+                <th className={table.headCell} scope="col">
+                  Price
+                </th>
+                <th className={table.headCell} scope="col">
+                  Stock
+                </th>
+                <th className={table.headCell} scope="col">
+                  <span className={table.visuallyHidden}>Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <ProductRow
+                  key={product.id}
+                  product={product}
+                  onEdit={(product) => {
+                    setError(null);
+                    setEditing(product);
+                  }}
+                  onDelete={handleRequestDelete}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       {editing !== undefined && (

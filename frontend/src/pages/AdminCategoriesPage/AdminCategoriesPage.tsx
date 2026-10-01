@@ -7,7 +7,7 @@ import type { Category } from '../../types';
 import { ConfirmDialog } from '../../components/ConfirmDialog/ConfirmDialog';
 import { useConfirmDelete } from '../../hooks/useConfirmDelete';
 import table from '../../styles/adminTable.module.css';
-import styles from './AdminCategoriesPage.module.css';
+import styles from '../../styles/adminPage.module.css';
 import { NewCategoryRow } from '../../components/NewCategoryRow/NewCategoryRow';
 
 export default function AdminCategoriesPage() {

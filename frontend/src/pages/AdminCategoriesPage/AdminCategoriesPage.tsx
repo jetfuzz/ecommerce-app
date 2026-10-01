@@ -14,14 +14,13 @@ export default function AdminCategoriesPage() {
   const { state, isMutating, createCategory, updateCategory, deleteCategory } =
     useCategories();
   const [error, setError] = useState<string | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
   const confirmDelete = useConfirmDelete<Category>(
     (category) => deleteCategory(category.id),
     (err) => setError(getErrorMessage(err)),
   );
-  const [isAdding, setIsAdding] = useState(false);
 
   async function handleCreate(name: string) {
-    setIsAdding(true);
     try {
       await createCategory(name);
     } catch (err) {
@@ -56,15 +55,19 @@ export default function AdminCategoriesPage() {
     );
 
   const categories = state.data;
+  const showTable = categories.length > 0 || isAdding;
 
   return (
     <div>
       <div className={styles.header}>
         <h1 className={styles.title}>Categories</h1>
         <button
-          type="button" 
+          type="button"
           className={styles.addButton}
-          onClick={() => { setError(null); setIsAdding(true); }}
+          onClick={() => {
+            setError(null);
+            setIsAdding(true);
+          }}
           disabled={isAdding}
         >
           Add Category
@@ -77,9 +80,7 @@ export default function AdminCategoriesPage() {
         </p>
       )}
 
-      {categories.length === 0 ? (
-        <p className={table.empty}>No categories yet.</p>
-      ) : (
+      {showTable ? (
         <table className={table.table} aria-label="categories">
           <thead>
             <tr>
@@ -113,6 +114,8 @@ export default function AdminCategoriesPage() {
             )}
           </tbody>
         </table>
+      ) : (
+        <p className={table.empty}>No categories yet.</p>
       )}
 
       {confirmDelete.pending && (

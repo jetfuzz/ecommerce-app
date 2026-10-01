@@ -31,6 +31,8 @@ export function ConfirmDialog({
     <dialog
       ref={ref}
       className={styles.dialog}
+      aria-labelledby={titleId}
+      aria-describedby={descriptionId}
       onCancel={(e) => {
         e.preventDefault();
         onCancel();

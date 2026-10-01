@@ -12,13 +12,6 @@ export default function Footer() {
         <a href="https://github.com/jetfuzz" target="_blank" rel="noreferrer">
           GitHub
         </a>
-        <a
-          href="https://www.linkedin.com/in/jordanrfredericks/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          LinkedIn
-        </a>
         <span>© {new Date().getFullYear()}</span>
       </div>
     </footer>

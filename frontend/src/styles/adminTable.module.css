@@ -28,7 +28,7 @@
   background-color: var(--color-card-hover);
 }
 
-.row + .row > .cell {
+.row + .row > td {
   border-top: 1px solid var(--color-border);
 }
 

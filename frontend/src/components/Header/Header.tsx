@@ -1,5 +1,5 @@
 import { Search, ShoppingBag } from 'lucide-react';
-import type { ChangeEvent } from 'react';
+import { type ChangeEvent } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import styles from './Header.module.css';
 import UserMenu from '../UserMenu/UserMenu';
@@ -23,23 +23,23 @@ export default function Header({
 
   return (
     <header className={styles.header}>
-      <nav aria-label="Primary">
-        <ul className={styles.list}>
-          <li className={styles.logo}>
-            <Link to="/">Zenith</Link>
-          </li>
-          <li>
-            <NavLink
-              to="/shop"
-              className={({ isActive }) =>
-                isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
-              }
-            >
-              Shop
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
+      <div className={styles.brand}>
+        <Link className={styles.logo} to="/">Zenith</Link>
+        <nav aria-label="Primary">
+          <ul className={styles.list}>
+            <li>
+              <NavLink
+                to="/shop"
+                className={({ isActive }) =>
+                  isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+                }
+              >
+                Shop
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
       <form
         className={styles.searchForm}

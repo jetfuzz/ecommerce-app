@@ -1,22 +1,17 @@
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 320px) 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-4);
   height: var(--header-height);
   padding-inline: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.header::before {
-  content: '';
-  position: absolute;
-  inset: 0 calc(50% - 50vw);
-  z-index: -1;
-  background-color: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
 }
 
 .list {
@@ -30,6 +25,7 @@
 
 .actions {
   gap: var(--space-4);
+  justify-self: end;
 }
 
 .logo {
@@ -67,8 +63,8 @@
 }
 
 .searchForm {
-  flex: 1 1 auto;
-  min-width: 0;
+  justify-self: center;
+  min-width: 320px;
   max-width: 320px;
   height: 2.5rem;
   display: flex;
@@ -147,6 +143,44 @@
 }
 
 @media (max-width: 768px) {
+  :root {
+    --header-height: 7rem;
+  }
+
+  .header {
+    height: var(--header-height);
+    gap: var(--space-1);
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 3.5rem 1fr;
+    row-gap: 0;
+    grid-template-areas:
+      'shop logo actions'
+      'search search search';
+  }
+
+  .brand {
+    display: contents;
+  }
+
+  .brand nav {
+    grid-area: shop;
+  }
+
+  .logo {
+    grid-area: logo;
+  }
+
+  .searchForm {
+    grid-area: search;
+    width: 100%;
+    max-width: 32rem;
+    justify-self: center;
+  }
+
+  .actions {
+    grid-area: actions;
+  }
+
   .list {
     gap: var(--space-4);
   }
@@ -154,7 +188,7 @@
 
 @media (max-width: 480px) {
   .header {
-    gap: var(--space-3);
+    gap: var(--space-1);
   }
 
   .list,
@@ -162,12 +196,8 @@
     gap: var(--space-3);
   }
 
-  .logo {
-    font-size: var(--text-base);
-    letter-spacing: 0.1em;
-  }
-
   .searchForm {
     max-width: none;
+    min-width: 0;
   }
 }

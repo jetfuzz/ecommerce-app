@@ -46,13 +46,9 @@ export default function AdminProductsPage() {
   if (state.status === 'loading' || categoriesState.status === 'loading')
     return <Spinner />;
   if (state.status === 'error')
-    return (
-      <p className={styles.error}>{state.message}</p>
-    );
+    return <p className={styles.error}>{state.message}</p>;
   if (categoriesState.status === 'error')
-    return (
-      <p className={styles.error}>{categoriesState.message}</p>
-    );
+    return <p className={styles.error}>{categoriesState.message}</p>;
 
   const products = state.data;
   const categories = categoriesState.data;

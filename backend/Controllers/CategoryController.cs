@@ -22,14 +22,8 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories()
         {
-            var categories = await _context.Categories
-                .OrderBy(c => c.Id)
-                .ToListAsync();
-            var dto = categories.Select(c => new CategoryDto
-            {
-                Id = c.Id,
-                Name = c.Name,
-            });
+            var categories = await _context.Categories.OrderBy(c => c.Id).ToListAsync();
+            var dto = categories.Select(c => new CategoryDto { Id = c.Id, Name = c.Name });
 
             return Ok(dto);
         }
@@ -60,7 +54,9 @@ namespace backend.Controllers
             if (category == null)
                 return NotFound();
 
-            var exists = await _context.Categories.AnyAsync(c => c.Name == createCategoryDto.Name && c.Id != id);
+            var exists = await _context.Categories.AnyAsync(c =>
+                c.Name == createCategoryDto.Name && c.Id != id
+            );
             if (exists)
                 return BadRequest(new { message = "A category with this name already exists" });
 

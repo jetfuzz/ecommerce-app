@@ -40,9 +40,7 @@ namespace backend.Controllers
                 );
             }
 
-            var products = await query
-                .OrderBy(p => p.Id)
-                .ToListAsync();
+            var products = await query.OrderBy(p => p.Id).ToListAsync();
 
             var productDtos = products.Select(p => new ProductDto
             {

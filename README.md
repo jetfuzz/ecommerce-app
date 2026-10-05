@@ -4,6 +4,8 @@ Full-stack e-commerce application built with a React and TypeScript frontend, an
 
 🔗 **[Live Demo](https://ecommerce-app-plum.vercel.app/)**
 
+![Zenith home page](docs/screenshot-home.png)
+
 ## Features
 
 - Browse products with category filters, search, and sorting
@@ -27,7 +29,7 @@ Full-stack e-commerce application built with a React and TypeScript frontend, an
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [Node.js](https://nodejs.org/) 24
 - PostgreSQL
-- A [Stripe](https://stripe.com) account (test mode) and the [Stripe CLI](https://stripe.com/docs/stripe-cli)
+- A [Stripe](https://stripe.com) account and the [Stripe CLI](https://stripe.com/docs/stripe-cli)
 
 ## Getting Started
 
@@ -88,8 +90,6 @@ npm install
 npm run dev
 ```
 
-The app runs at `http://localhost:5173`.
-
 ### 6. Forward Stripe webhooks (for local development)
 
 Orders are marked as paid by the Stripe webhook, so checkout only completes if the Stripe CLI is forwarding events to the local API.
@@ -109,7 +109,7 @@ dotnet user-secrets set "Stripe:WebhookSecret" "whsec_..."
 dotnet run --launch-profile https
 ```
 
-Leave `stripe listen` running while you test checkout. For payments, use Stripe's test card `4242 4242 4242 4242` with any future expiry and any CVC.
+For payments, use Stripe's test card `4242 4242 4242 4242` with any future expiry and any CVC.
 
 ## Running Tests
 

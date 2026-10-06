@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using backend.Data;
 using backend.DTOs.Order;
+using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders()
         {
             var orders = await _context
-                .Orders.Where(o => o.UserId == userId)
+                .Orders.Where(o => o.UserId == userId && o.Status != OrderStatus.Pending)
                 .Include(o => o.Items)
                 .OrderByDescending(o => o.CreatedAt)
                 .ToListAsync();

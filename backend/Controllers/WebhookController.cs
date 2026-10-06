@@ -1,4 +1,5 @@
 ﻿using backend.Data;
+using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,7 @@ namespace backend.Controllers
                     .Orders.Include(o => o.Items)
                     .FirstOrDefaultAsync(o => o.StripeSessionId == session.Id);
 
-                if (order != null && order.Status != Models.OrderStatus.Paid)
+                if (order != null && order.Status != OrderStatus.Paid)
                 {
                     foreach (var item in order.Items)
                     {
@@ -62,7 +63,7 @@ namespace backend.Controllers
                             product.Stock -= item.Quantity;
                         }
                     }
-                    order.Status = Models.OrderStatus.Paid;
+                    order.Status = OrderStatus.Paid;
                     await _cartService.ClearCartAsync(order.UserId);
                     await _context.SaveChangesAsync();
                 }

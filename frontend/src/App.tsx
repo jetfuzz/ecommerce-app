@@ -36,7 +36,7 @@ function App() {
         <div role="status" className={styles.statusPage}>
           <Spinner />
           {isSlow && (
-            <p className={styles.statusMessage}>
+            <p className={styles.message}>
               Waking up the server, this can take up to a minute
             </p>
           )}

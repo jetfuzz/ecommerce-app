@@ -1,5 +1,5 @@
 .ordersPage {
-  padding: var(--space-3) var(--space-5) var(--space-7);
+  padding: var(--space-3) 0 var(--space-7);
 }
 
 .title {
@@ -138,6 +138,10 @@
 @media (max-width: 640px) {
   .order {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .itemImage {
+    width: 4rem;
   }
 
   .orderDetails {

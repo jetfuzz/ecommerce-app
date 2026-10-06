@@ -1,10 +1,18 @@
 .header {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr minmax(0, 320px) 1fr;
   align-items: center;
   gap: var(--space-4);
   height: var(--header-height);
   padding-inline: var(--space-3);
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: -1;
   border-bottom: 1px solid var(--color-border);
 }
 

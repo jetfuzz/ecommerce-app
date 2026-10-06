@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import Spinner from '../../components/Spinner/Spinner';
-import { useOrders } from '../../hooks/UseOrders';
+import { useOrders } from '../../hooks/useOrders';
 import { formatPrice } from '../../utils/formatPrice';
 import { formatDate } from '../../utils/formatDate';
 import styles from './OrdersPage.module.css';

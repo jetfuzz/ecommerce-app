@@ -24,14 +24,18 @@ export default function Header({
   return (
     <header className={styles.header}>
       <div className={styles.brand}>
-        <Link className={styles.logo} to="/">Zenith</Link>
+        <Link className={styles.logo} to="/">
+          Zenith
+        </Link>
         <nav aria-label="Primary">
           <ul className={styles.list}>
             <li>
               <NavLink
                 to="/shop"
                 className={({ isActive }) =>
-                  isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+                  isActive
+                    ? `${styles.navLink} ${styles.active}`
+                    : styles.navLink
                 }
               >
                 Shop

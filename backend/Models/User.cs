@@ -15,5 +15,6 @@
     {
         Admin,
         User,
+        Demo,
     }
 }

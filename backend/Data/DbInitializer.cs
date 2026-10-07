@@ -191,7 +191,18 @@ namespace backend.Data
                 config["SeedUser:Password"]
             );
 
-            var users = new List<User> { adminUser, defaultUser };
+            var demoUser = new User
+            {
+                Email = "demo@zenith.com",
+                Username = "demo",
+                Role = UserRole.Demo,
+            };
+            demoUser.PasswordHash = passwordHasher.HashPassword(
+                demoUser,
+                "demodemo"
+            );
+
+            var users = new List<User> { adminUser, defaultUser, demoUser };
             context.Users.AddRange(users);
             await context.SaveChangesAsync();
         }

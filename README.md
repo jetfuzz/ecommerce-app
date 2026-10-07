@@ -24,6 +24,17 @@ Full-stack e-commerce application built with a React and TypeScript frontend, an
 - **Testing:** Vitest, React Testing Library, xUnit
 - **Deployment:** Vercel, Azure App Service
 
+## Demo
+
+You can try the live demo with the following credentials:
+
+```text
+email: demo@zenith.com
+password: demodemo
+```
+
+Admin actions are disabled in demo mode.
+
 ## Prerequisites
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)

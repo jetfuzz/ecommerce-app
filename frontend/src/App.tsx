@@ -6,6 +6,7 @@ import { useCartContext } from './context/CartContext';
 import Spinner from './components/Spinner/Spinner';
 import Footer from './components/Footer/Footer';
 import styles from './styles/statusPage.module.css';
+import DemoBanner from './components/DemoBanner/DemoBanner';
 
 function App() {
   const productState = useProducts();
@@ -27,6 +28,7 @@ function App() {
 
   return (
     <>
+      <DemoBanner />
       <Header
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}

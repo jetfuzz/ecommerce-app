@@ -9,8 +9,10 @@ import { useConfirmDelete } from '../../hooks/useConfirmDelete';
 import table from '../../styles/adminTable.module.css';
 import styles from '../../styles/adminPage.module.css';
 import { NewCategoryRow } from '../../components/NewCategoryRow/NewCategoryRow';
+import { useAuth } from '../../context/AuthContext';
 
 export default function AdminCategoriesPage() {
+  const { isReadOnly } = useAuth();
   const { state, isMutating, createCategory, updateCategory, deleteCategory } =
     useCategories();
   const [error, setError] = useState<string | null>(null);
@@ -68,7 +70,7 @@ export default function AdminCategoriesPage() {
             setError(null);
             setIsAdding(true);
           }}
-          disabled={isAdding}
+          disabled={isAdding || isReadOnly}
         >
           Add Category
         </button>

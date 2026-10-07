@@ -34,6 +34,15 @@
   outline-offset: 2px;
 }
 
+.addButton:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
+.addButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .error {
   margin-bottom: var(--space-4);
   font-size: var(--text-sm);

@@ -44,7 +44,7 @@ const routes = [
         ],
       },
       {
-        element: <ProtectedRoute allowedRoles={['Admin']} />,
+        element: <ProtectedRoute allowedRoles={['Admin', 'Demo']} />,
         children: [
           {
             path: 'admin',

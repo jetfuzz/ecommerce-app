@@ -65,8 +65,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const isReadOnly = state.user?.role === 'Demo';
+
   return (
-    <AuthContext.Provider value={{ ...state, login, logout }}>
+    <AuthContext.Provider value={{ ...state, login, logout, isReadOnly }}>
       {children}
     </AuthContext.Provider>
   );

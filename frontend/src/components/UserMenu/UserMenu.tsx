@@ -40,7 +40,7 @@ export default function UserMenu() {
               Orders
             </Link>
           </DropdownMenu.Item>
-          {user.role === 'Admin' && (
+          {(user.role === 'Admin' || user.role === 'Demo') && (
             <DropdownMenu.Item asChild className={styles.menuItem}>
               <Link to="/admin">
                 <LayoutDashboard />

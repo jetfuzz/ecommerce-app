@@ -53,7 +53,7 @@ export interface User {
   role: UserRole;
 }
 
-export type UserRole = 'Admin' | 'User';
+export type UserRole = 'Admin' | 'User' | 'Demo';
 
 export interface AuthState {
   user: User | null;
@@ -64,6 +64,7 @@ export interface AuthState {
 export interface AuthContextType extends AuthState {
   login: (token: string, user: User) => void;
   logout: () => void;
+  isReadOnly: boolean;
 }
 
 export interface LoginResponse {

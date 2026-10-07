@@ -10,8 +10,10 @@ import type { CreateProductPayload, Product } from '../../types';
 import { getErrorMessage } from '../../utils/errors';
 import { ProductFormDialog } from '../../components/ProductFormDialog/ProductFormDialog';
 import { ConfirmDialog } from '../../components/ConfirmDialog/ConfirmDialog';
+import { useAuth } from '../../context/AuthContext';
 
 export default function AdminProductsPage() {
+  const { isReadOnly } = useAuth();
   const { state, isMutating, createProduct, updateProduct, deleteProduct } =
     useAdminProducts();
   const { state: categoriesState } = useCategories();
@@ -64,7 +66,7 @@ export default function AdminProductsPage() {
             setError(null);
             setEditing(null);
           }}
-          disabled={isMutating}
+          disabled={isMutating || isReadOnly}
         >
           Add Product
         </button>

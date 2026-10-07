@@ -2,6 +2,7 @@ import type { Product } from '../../types';
 import table from '../../styles/adminTable.module.css';
 import { formatPrice } from '../../utils/formatPrice';
 import { Pencil, Trash2 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 interface ProductRowProps {
   product: Product;
@@ -10,6 +11,8 @@ interface ProductRowProps {
 }
 
 export function ProductRow({ product, onEdit, onDelete }: ProductRowProps) {
+  const { isReadOnly } = useAuth();
+
   return (
     <tr className={table.row}>
       <td className={table.id}>{product.id}</td>
@@ -31,6 +34,7 @@ export function ProductRow({ product, onEdit, onDelete }: ProductRowProps) {
           className={table.iconButton}
           onClick={() => onEdit(product)}
           aria-label={`Edit ${product.title}`}
+          disabled={isReadOnly}
         >
           <Pencil size={18} strokeWidth={1.5} aria-hidden="true" />
         </button>
@@ -40,6 +44,7 @@ export function ProductRow({ product, onEdit, onDelete }: ProductRowProps) {
           data-variant="danger"
           onClick={() => onDelete(product.id)}
           aria-label={`Delete ${product.title}`}
+          disabled={isReadOnly}
         >
           <Trash2 size={18} strokeWidth={1.5} aria-hidden="true" />
         </button>

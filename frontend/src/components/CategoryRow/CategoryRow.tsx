@@ -3,6 +3,7 @@ import { Check, Pencil, Trash2, X } from 'lucide-react';
 import type { Category } from '../../types';
 import table from '../../styles/adminTable.module.css';
 import styles from '../../styles/categoryRow.module.css';
+import { useAuth } from '../../context/AuthContext';
 
 interface CategoryRowProps {
   category: Category;
@@ -17,6 +18,7 @@ export function CategoryRow({
   onUpdate,
   onDelete,
 }: CategoryRowProps) {
+  const { isReadOnly } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState('');
 
@@ -86,6 +88,7 @@ export function CategoryRow({
           className={table.iconButton}
           onClick={startEditing}
           aria-label={`Edit ${category.name}`}
+          disabled={isReadOnly}
         >
           <Pencil size={18} strokeWidth={1.5} aria-hidden="true" />
         </button>
@@ -95,6 +98,7 @@ export function CategoryRow({
           data-variant="danger"
           onClick={() => onDelete(category.id)}
           aria-label={`Delete ${category.name}`}
+          disabled={isReadOnly}
         >
           <Trash2 size={18} strokeWidth={1.5} aria-hidden="true" />
         </button>
